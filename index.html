@@ -55,6 +55,8 @@ h2.sh{background:#1f3b63;color:#fff;border-radius:8px;padding:6px 10px;font-size
 .pie{display:block;width:180px;max-width:70%;margin:0 auto}.pie path,.pie circle{stroke:var(--card);stroke-width:1;stroke-linejoin:round}.pie path:hover{opacity:.85}
 .lg{margin-top:10px}.lgi{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:13px}.lgi i{width:12px;height:12px;border-radius:3px;flex:none}.lgi span{flex:1}.lgi small{color:var(--mut);min-width:48px;text-align:end}
 .inv th{background:#1f4e78;color:#fff;font-weight:700}.inv td:first-child,.inv th:first-child{text-align:center;width:42px}.inv td:nth-child(2),.inv th:nth-child(2){text-align:start}.inv .itot td{background:#70ad47;color:#fff;font-weight:700}.inv .ng{color:var(--rt);font-weight:700}.inv.dep td:first-child,.inv.dep th:first-child{width:auto;text-align:start}
+.xl{max-height:75vh;overflow:auto}.xl th{background:#1f4e78;color:#fff;font-weight:700;position:sticky;top:0;z-index:1}.xl td:nth-child(2){text-align:start}.xl th,.xl td{padding:4px 6px}.xl td input{width:58px;padding:3px}.xl th{white-space:normal;font-size:12.5px;line-height:1.25}
+td.xs{font-weight:700;font-size:12px}td.xs.R{background:#f4cccc;color:#9c0006}td.xs.F{background:#ffe8b3;color:#7a4f00}td.xs.S{background:#c6efce;color:#006100}td.xs.E{background:#b42318;color:#fff}
 /* ===== impression ===== */
 #pr{display:none}
 #pr .lh{display:flex;direction:ltr;align-items:flex-start;justify-content:space-between;gap:8px;border-bottom:2px solid #006b33;padding-bottom:8px;margin-bottom:12px}
@@ -167,7 +169,7 @@ Object.assign(T.fr,{setupT:"Première utilisation : créez le compte du supervis
 Object.assign(T.ar,{setupT:"أول استخدام: أنشئ حساب المشرف",noRole:"هذا الحساب غير مرتبط بأي صلاحية. تواصل مع المشرف.",
  before:function(n){return "إضافة الأشهر من "+n+" إلى أول شهر موجود؟ لترحيل المخزون أدخل بيانات هذه الأشهر ثم راجع مخزون بداية أول شهر موجود."},
  addSup:"إضافة مشرف",sups:"المشرفون",revoke:"سحب الصلاحية",owner:"المالك",supNote2:"كل المشرفين لهم صلاحية كاملة؛ أما الأعضاء فمحصورون في منشآتهم.",revC:"سحب صلاحيات هذا المشرف؟"});
-Object.assign(T.fr,{invNB:"Stock suivi séparément pour chaque structure et chaque antigène. Aucun stock total multi-antigènes dans l’inventaire.",dT:"TABLEAU DE BORD – VACCINATION",dSub:"Situation des stocks d’antigènes – Circonscription sanitaire de Kankossa",kI:"INDICATEURS CLÉS",byA2:"STATUT DES STOCKS PAR ANTIGÈNE",byS2:"SURVEILLANCE PAR STRUCTURE",ch1:"Stock total par antigène",ch2:"Répartition des structures-antigènes",kT2:"Stock fin total",e:"Entrées (reçues du dépôt)",u:"Doses utilisées",a:"Doses administrées",p:"Pertes",r:"Reçu",ds:"Doses données aux centres",
+Object.assign(T.fr,{allS:"Toutes les structures",allA:"Tous les antigènes",allSt:"Tous les statuts",lines:"ligne(s)",invNB:"Stock suivi séparément pour chaque structure et chaque antigène. Aucun stock total multi-antigènes dans l’inventaire.",dT:"TABLEAU DE BORD – VACCINATION",dSub:"Situation des stocks d’antigènes – Circonscription sanitaire de Kankossa",kI:"INDICATEURS CLÉS",byA2:"STATUT DES STOCKS PAR ANTIGÈNE",byS2:"SURVEILLANCE PAR STRUCTURE",ch1:"Stock total par antigène",ch2:"Répartition des structures-antigènes",kT2:"Stock fin total",e:"Entrées (reçues du dépôt)",u:"Doses utilisées",a:"Doses administrées",p:"Pertes",r:"Reçu",ds:"Doses données aux centres",
  hMv:"Indicateurs des mouvements",hSt:"Indicateurs de stock",kE:"Entrées",kU:"Doses utilisées",kAd:"Doses administrées",kP:"Pertes",kTP:"Taux de perte",kSu:"Stocks suffisants",kO:"Commandes en attente",
  totC:"TOTAL CIRCONSCRIPTION",seed:"Importer les 29 établissements de la circonscription",seedOk:function(n){return n+" établissement(s) ajouté(s)."},
  mnote:"Stock fin = stock début + entrées − doses utilisées. Pertes = doses utilisées − doses administrées (calcul automatique). Les entrées d’un établissement proviennent des commandes validées par le superviseur et sont déduites automatiquement du stock du dépôt Moughataa.",
@@ -178,7 +180,7 @@ Object.assign(T.fr,{invNB:"Stock suivi séparément pour chaque structure et cha
  oApC:function(n,m){return "Valider la livraison pour « "+n+" » ?\nLes quantités seront ajoutées aux entrées de l’établissement ("+m+") et déduites du stock du dépôt."},oRejC:"Refuser cette commande ?",oCanC:"Annuler cette commande ?",
  oHint:"Les quantités sont pré-remplies pour les antigènes en rupture ou en stock faible (jusqu’au seuil). Modifiez-les si besoin.",oBy:"Demandé par",oDate:"Date",oGone:"Établissement supprimé",
  guide:["Objectif : suivre en temps réel le stock de chaque antigène dans les établissements de la circonscription sanitaire de Kankossa.","Mouvements : saisir pour chaque antigène le stock début, les doses utilisées et les doses administrées. Les pertes (utilisées − administrées) et le stock fin (début + entrées − utilisées) sont calculés automatiquement. Le tableau de bord et l’inventaire sont directement liés aux mouvements et se mettent à jour automatiquement.","Dépôt Moughataa : c’est le distributeur principal des établissements. Tout ce que reçoit un établissement est automatiquement déduit du stock du dépôt.","Commandes : le membre envoie la liste de ses besoins (pré-remplie avec les ruptures et stocks faibles). Le superviseur la reçoit, saisit les quantités à livrer et valide : elles entrent dans le stock de l’établissement (mois en cours) et sont déduites du dépôt.","Inventaire : stock fin de chaque antigène pour chaque établissement, avec le total de la circonscription par antigène.","Statut : RUPTURE = 0 dose ; STOCK FAIBLE = 1 jusqu’au seuil − 1 ; STOCK SUFFISANT = seuil ou plus (20 par défaut, paramétrable). Un stock négatif ou des doses administrées supérieures aux doses utilisées sont signalés en ERREUR.","Le mois en cours est le dernier mois ouvert. Le superviseur ouvre un nouveau mois depuis le calendrier ; le stock fin est reporté en stock début. Seul le superviseur modifie le dépôt, les entrées, le seuil et les mois passés.","Contrôle : comparer régulièrement le stock théorique au stock physique et vérifier les lots, dates de péremption et observations.","Impression : « Imprimer le rapport » produit un rapport A4 (enregistrable en PDF) par établissement ; le superviseur imprime aussi le rapport collectif."]});
-Object.assign(T.ar,{invNB:"يُتابَع المخزون منفصلاً لكل منشأة ولكل لقاح. لا يوجد في الجرد مجموع يجمع عدة لقاحات.",dT:"لوحة قيادة التلقيح",dSub:"وضعية مخزون اللقاحات – الدائرة الصحية بكنكوصة",kI:"المؤشرات الرئيسية",byA2:"حالة المخزون حسب اللقاح",byS2:"المراقبة حسب المنشأة",ch1:"إجمالي المخزون حسب اللقاح",ch2:"توزيع الثنائيات (منشأة – لقاح)",kT2:"إجمالي المخزون النهائي",e:"الوارد (من المستودع)",u:"الجرعات المستعملة",a:"الجرعات المعطاة",p:"الضائع",r:"المستلم",ds:"الجرعات المعطاة للمراكز",
+Object.assign(T.ar,{allS:"كل المنشآت",allA:"كل اللقاحات",allSt:"كل الحالات",lines:"سطر",invNB:"يُتابَع المخزون منفصلاً لكل منشأة ولكل لقاح. لا يوجد في الجرد مجموع يجمع عدة لقاحات.",dT:"لوحة قيادة التلقيح",dSub:"وضعية مخزون اللقاحات – الدائرة الصحية بكنكوصة",kI:"المؤشرات الرئيسية",byA2:"حالة المخزون حسب اللقاح",byS2:"المراقبة حسب المنشأة",ch1:"إجمالي المخزون حسب اللقاح",ch2:"توزيع الثنائيات (منشأة – لقاح)",kT2:"إجمالي المخزون النهائي",e:"الوارد (من المستودع)",u:"الجرعات المستعملة",a:"الجرعات المعطاة",p:"الضائع",r:"المستلم",ds:"الجرعات المعطاة للمراكز",
  hMv:"مؤشرات الحركات",hSt:"مؤشرات المخزون",kE:"الوارد",kU:"الجرعات المستعملة",kAd:"الجرعات المعطاة",kP:"الضائع",kTP:"نسبة الضياع",kSu:"مخزون كافٍ",kO:"طلبيات في الانتظار",
  totC:"مجموع الدائرة الصحية",seed:"استيراد المنشآت الـ29 التابعة للدائرة",seedOk:function(n){return "تمت إضافة "+n+" منشأة."},
  mnote:"المخزون النهائي = مخزون البداية + الوارد − الجرعات المستعملة. الضائع = المستعملة − المعطاة (يُحسب تلقائياً). وارد المنشأة يأتي من الطلبيات التي يوافق عليها المشرف، ويُخصم تلقائياً من مخزون مستودع المقاطعة.",
@@ -196,7 +198,7 @@ try{lang=localStorage.getItem(KEY)||"fr"}catch(e){}
 /* garder l’onglet ouvert (et l’établissement choisi) après actualisation de la page */
 function sv(){try{localStorage.setItem("kv-tab",tab);localStorage.setItem("kv-cur",cur)}catch(e){}}
 function gT(){try{var v=+localStorage.getItem("kv-tab");return v>=0&&v<=5?v:0}catch(e){return 0}}
-function gC(){try{return localStorage.getItem("kv-cur")||DP}catch(e){return DP}}
+function gC(){try{return localStorage.getItem("kv-cur")||"__all"}catch(e){return "__all"}}
 function esc(x){return String(x).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 function ml(m){var q=m.split("-");try{return new Date(+q[0],+q[1]-1,1).toLocaleDateString(lang=="ar"?"ar-u-nu-latn":"fr",{month:"long",year:"numeric"})}catch(e){return m}}
 function nxt(m){var q=m.split("-"),d=new Date(+q[0],+q[1],1);return d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)}
@@ -243,17 +245,26 @@ function dash(){var t=T[lang],m=M(),V=VS(),C={R:0,F:0,S:0,E:0},tot=0,ra="",rd=""
  +'<h2 class="sh">'+t.byS2+'</h2><div class="dg"><div class="sc"><table>'+hrow([t.st,t.tot,t.ruptures,t.faibles,t.stat])+rs+'</table></div>'+ch2+'</div>'
  +'<div class="sc" style="margin-top:14px;max-width:420px"><table>'+row([bd("R"),"<b>"+(C.R+C.E)+"</b>"])+row([bd("F"),"<b>"+C.F+"</b>"])+row([bd("S"),"<b>"+C.S+"</b>"])+'</table></div>'
  +(admin?'<h2 class="sh">'+t.byD+'</h2><div class="sc"><table>'+hrow([t.ag,t.d,t.r,t.ds,t.p,t.f,t.stat])+rd+'</table></div>':'')}
-function inp(i,k,v,ok){return '<td><input type="number" min="0" step="1" inputmode="numeric" data-i="'+i+'" data-k="'+k+'" value="'+v+'"'+(ok?"":" disabled")+'></td>'}
-function mouv(){var t=T[lang],m=M(),isD=admin&&cur==DP,open=m==CFG.cur||(admin&&CFG.months.indexOf(m)>=0),rows="",o="",sel;
+function inp(i,k,v,ok,sid){return '<td><input type="number" min="0" step="1" inputmode="numeric" data-i="'+i+'" data-k="'+k+'"'+(sid?' data-s="'+sid+'"':'')+' value="'+v+'"'+(ok?"":" disabled")+'></td>'}
+/* Mouvements : une seule table comme la feuille « Mouvements » du fichier Excel (Structure × Antigène), avec filtres */
+var ALL="__all",fA="",fS="";
+function mouv(){var t=T[lang],m=M(),isD=admin&&cur==DP,open=m==CFG.cur||(admin&&CFG.months.indexOf(m)>=0),rows="",o="";
  if(!admin)cur=ME.sid;
- if(admin)o='<option value="'+DP+'"'+(isD?" selected":"")+'>'+t.depot+'</option>'+CFG.structs.map(function(x){return '<option value="'+x.id+'"'+(x.id==cur?" selected":"")+'>'+esc(x.name)+'</option>'}).join("");
- var cs=CFG.structs.find(function(x){return x.id==cur});
- AG.forEach(function(a,i){
-  if(isD){var r=dd(m,a),n=df(m,a),w=open&&admin;rows+="<tr><td>"+L(a)+"</td>"+inp(i,"d",r.d,w)+inp(i,"r",r.r,w)+"<td><b>"+dist(m,a)+"</b></td>"+inp(i,"p",r.p,w)+'<td id="f'+i+'">'+n+'</td><td id="s'+i+'">'+bd(st(n))+"</td></tr>"}
-  else{var r=sd(m,cur,a),n=sf(m,cur,a);rows+="<tr><td>"+L(a)+"</td>"+inp(i,"d",r.d,open)+inp(i,"e",r.e,open&&admin)+inp(i,"u",r.u,open)+inp(i,"a",r.a,open)+'<td id="p'+i+'">'+pc(r.p)+'</td><td id="f'+i+'">'+n+'</td><td id="s'+i+'">'+bd(st(n))+"</td></tr>"}});
- var hd=isD?[t.d,t.r,t.ds,t.p]:[t.d,t.e,t.u,t.a,t.p];
- return '<div class="bar">'+(admin?'<select id="sel">'+o+'</select>':'<b>'+esc(cs?cs.name:"")+'</b>')+(admin?'<label>'+t.thr+' <input id="thr" type="number" min="1" step="1" value="'+CFG.thr+'" style="width:70px"></label>':'')+(isD?'':'<button class="sm pb" id="pf">🖨 '+t.prB+'</button>')+'</div>'
- +'<div class="sc"><table><tr><th>'+t.ag+'</th>'+hd.map(function(x){return "<th>"+x+"</th>"}).join("")+'<th>'+t.f+'</th><th>'+t.stat+'</th></tr>'+rows+'</table></div><p class="note">'+t.mnote+(admin&&m!=CFG.cur?'<br>'+t.corr:'')+(admin?'':'<br>'+t.mnote2)+'</p>'
+ if(admin)o='<option value="'+ALL+'"'+(cur==ALL?" selected":"")+'>'+t.allS+'</option><option value="'+DP+'"'+(isD?" selected":"")+'>'+t.depot+'</option>'+CFG.structs.map(function(x){return '<option value="'+x.id+'"'+(x.id==cur?" selected":"")+'>'+esc(x.name)+'</option>'}).join("");
+ var fa='<select id="fA"><option value="">'+t.allA+'</option>'+AG.map(function(a){return '<option value="'+a+'"'+(fA==a?" selected":"")+'>'+L(a)+'</option>'}).join("")+'</select>';
+ var fs='<select id="fS"><option value="">'+t.allSt+'</option>'+["R","F","S","E"].map(function(q){return '<option value="'+q+'"'+(fS==q?" selected":"")+'>'+t[q]+'</option>'}).join("")+'</select>';
+ var head,cnt=0;
+ if(isD){head=[t.ag,t.d,t.r,t.ds,t.p,t.f,t.stat];
+  AG.forEach(function(a,i){if(fA&&fA!=a)return;var r=dd(m,a),n=df(m,a),q=st(n),w=open&&admin;if(fS&&fS!=q)return;cnt++;
+   rows+="<tr><td>"+L(a)+"</td>"+inp(i,"d",r.d,w,DP)+inp(i,"r",r.r,w,DP)+"<td><b>"+dist(m,a)+"</b></td>"+inp(i,"p",r.p,w,DP)+'<td id="f'+DP+'_'+i+'">'+n+'</td><td id="s'+DP+'_'+i+'" class="xs '+q+'">'+t[q]+"</td></tr>"})}
+ else{head=[t.st,t.ag,t.d,t.kE,t.u,t.a,t.p,t.f,t.stat];
+  var SS=admin?(cur==ALL?CFG.structs:CFG.structs.filter(function(x){return x.id==cur})):CFG.structs.filter(function(x){return x.id==ME.sid});
+  SS.forEach(function(s){AG.forEach(function(a,i){if(fA&&fA!=a)return;var r=sd(m,s.id,a),n=sf(m,s.id,a),q=r.p<0?"E":st(n);if(fS&&fS!=q)return;cnt++;var id=s.id+'_'+i;
+   rows+="<tr><td>"+esc(s.name)+"</td><td>"+L(a)+"</td>"+inp(i,"d",r.d,open,s.id)+inp(i,"e",r.e,open&&admin,s.id)+inp(i,"u",r.u,open,s.id)+inp(i,"a",r.a,open,s.id)+'<td id="p'+id+'">'+pc(r.p)+'</td><td id="f'+id+'"><b>'+n+'</b></td><td id="s'+id+'" class="xs '+q+'">'+t[q]+"</td></tr>"})})}
+ var pb=isD?'':(admin&&cur==ALL?'<button class="sm pb" id="pa">🖨 '+t.prAll+'</button>':'<button class="sm pb" id="pf">🖨 '+t.prB+'</button>');
+ return '<div class="bar">'+(admin?'<select id="sel">'+o+'</select>':'<b>'+esc((CFG.structs.find(function(x){return x.id==ME.sid})||{}).name||"")+'</b>')+fa+fs+pb+'<span class="note" style="margin:0">'+cnt+' '+t.lines+'</span></div>'
+ +(admin?'<div class="bar"><label>'+t.thr+' <input id="thr" type="number" min="1" step="1" value="'+CFG.thr+'" style="width:70px"></label></div>':'')
+ +'<div class="sc xl"><table>'+hrow(head)+rows+'</table></div><p class="note">'+t.mnote+(admin&&m!=CFG.cur?'<br>'+t.corr:'')+(admin?'':'<br>'+t.mnote2)+'</p>'
  +(admin?'<h2>'+t.addS+'</h2><div class="bar"><input id="ns" placeholder="'+t.addPh+'" style="padding:8px;border:1px solid var(--bd);border-radius:8px;background:var(--card);color:var(--tx)"><button class="sm" id="as">+</button></div>':'')}
 /* Inventaire : même présentation que la feuille « Inventaire » du fichier Excel */
 function inv(){var t=T[lang],m=M(),V=VS(),TT={},b="";
@@ -324,7 +335,7 @@ function render(){var t=T[lang];document.documentElement.lang=lang;document.docu
  if(!CFG)return admin?initUI():msg(t.init);
  if(!admin&&!CFG.structs.some(function(s){return s.id==ME.sid}))return msg(t.noFac);
  nav.innerHTML=t.tabs.map(function(x,i){return '<button class="'+(i==tab?"on":"")+'" data-t="'+i+'">'+(i==5&&!admin?t.myacc:x)+(i==3&&npend(admin?null:ME.sid)?' <span class="s F">'+npend(admin?null:ME.sid)+'</span>':'')+"</button>"}).join("");
- if(admin&&cur!=DP&&!CFG.structs.some(function(s){return s.id==cur}))cur=DP;
+ if(admin&&cur!=DP&&cur!=ALL&&!CFG.structs.some(function(s){return s.id==cur}))cur=DP;
  var m=M();
  var mb=document.getElementById("mb");mb.style.display=tab>=3?"none":"flex";
  mb.innerHTML=cal(m)+(m==CFG.cur?'<span class="s S">'+t.cur+'</span>':'<span class="s F">'+(admin?t.pastA:t.past)+'</span>')+'<span class="who" style="margin-inline-start:auto">'+(admin?t.sup:esc(ME.name||t.agent))+'</span>';
@@ -473,16 +484,18 @@ document.addEventListener("change",function(e){var b=e.target;
  else if(b.dataset&&b.dataset.oq){OQ[b.dataset.oq]=b.value}
  else if(b.id=="ms"){vm=b.value;render()}
  else if(b.id=="sel"&&admin){cur=b.value;sv();render()}
+ else if(b.id=="fA"){fA=b.value;render()}
+ else if(b.id=="fS"){fS=b.value;render()}
  else if(b.id=="thr"&&admin){var v=Number(b.value);if(!Number.isInteger(v)||v<1){alert(T[lang].bad);render();return}CFG.thr=v;saveCfg().then(render)}
  else if(b.dataset&&b.dataset.k){var v=Number(b.value),m=M(),a=AG[+b.dataset.i],k=b.dataset.k;if(m!=CFG.cur&&!admin)return;
   if(b.value===""||!Number.isInteger(v)||v<0){alert(T[lang].bad);render();return}
-  if(!admin)cur=ME.sid;
-  var isD=admin&&cur==DP,path,o;
-  if(isD){DEP[m]=DEP[m]||{};o=DEP[m];path="depot/"+m}else{DAT[m]=DAT[m]||{};DAT[m][cur]=DAT[m][cur]||{};o=DAT[m][cur];path="data/"+m+"_"+cur}
-  if(!isD&&k=="e"&&!admin)return;var b0=df(m,a),pv=o[a]?JSON.parse(JSON.stringify(o[a])):null,e0=isD?0:sd(m,cur,a).e;
+  var sid=admin?(b.dataset.s||cur):ME.sid;
+  var isD=admin&&sid==DP,path,o;
+  if(isD){DEP[m]=DEP[m]||{};o=DEP[m];path="depot/"+m}else{DAT[m]=DAT[m]||{};DAT[m][sid]=DAT[m][sid]||{};o=DAT[m][sid];path="data/"+m+"_"+sid}
+  if(!isD&&k=="e"&&!admin)return;var b0=df(m,a),pv=o[a]?JSON.parse(JSON.stringify(o[a])):null,e0=isD?0:sd(m,sid,a).e;
   var r=o[a]=isD?Object.assign({d:0,r:0,p:0},o[a]):nrm(o[a]);r[k]=v;
   if((isD||k=="e")&&df(m,a)<0&&df(m,a)<b0){if(pv)o[a]=pv;else Reflect.deleteProperty(o,a);b.value=isD?(pv&&+pv[k]||0):e0;b.blur();alert(isD?T[lang].dNeg(L(a),dist(m,a)):T[lang].oOver(L(a),Math.max(0,b0)+e0));render();return}
-  var i=+b.dataset.i;if(!isD)document.getElementById("p"+i).innerHTML=pc(sd(m,cur,a).p);document.getElementById("f"+i).textContent=isD?df(m,a):sf(m,cur,a);document.getElementById("s"+i).innerHTML=bd(st(isD?df(m,a):sf(m,cur,a)));
+  var id=sid+"_"+b.dataset.i,n=isD?df(m,a):sf(m,sid,a),q=!isD&&sd(m,sid,a).p<0?"E":st(n);if(!isD)document.getElementById("p"+id).innerHTML=pc(sd(m,sid,a).p);document.getElementById("f"+id).innerHTML=isD?n:"<b>"+n+"</b>";var sc=document.getElementById("s"+id);sc.className="xs "+q;sc.textContent=T[lang][q];
   wr(db.doc(path).set(JSON.parse(JSON.stringify(o)))).then(function(){if(admin&&m<CFG.cur)propagate(m)})}});
 document.addEventListener("focusout",function(){setTimeout(function(){var a=document.activeElement;if(pend&&!(a&&a.tagName=="INPUT")){pend=false;render()}},50)});
 render();
