@@ -52,7 +52,7 @@ h2.sh{background:#1f3b63;color:#fff;border-radius:8px;padding:6px 10px;font-size
 .bcol{flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;min-width:0}
 .bb{width:70%;max-width:28px;background:var(--pri);border-radius:4px 4px 0 0}.bv{font-size:11px;color:var(--mut);margin-bottom:2px}
 .bl{display:flex;gap:2px;margin-top:4px}.bl span{flex:1;text-align:center;font-size:11px;color:var(--mut);min-width:0;overflow:hidden}
-.sb{display:flex;gap:2px;height:30px;border-radius:4px;overflow:hidden;background:var(--card)}
+.pie{display:block;width:180px;max-width:70%;margin:0 auto}.pie path,.pie circle{stroke:var(--card);stroke-width:1;stroke-linejoin:round}.pie path:hover{opacity:.85}
 .lg{margin-top:10px}.lgi{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:13px}.lgi i{width:12px;height:12px;border-radius:3px;flex:none}.lgi span{flex:1}.lgi small{color:var(--mut);min-width:48px;text-align:end}
 /* ===== impression ===== */
 #pr{display:none}
@@ -224,12 +224,14 @@ function dash(){var t=T[lang],m=M(),V=VS(),C={R:0,F:0,S:0,E:0},tot=0,ra="",rd=""
  var mx=Math.max.apply(null,SA.map(function(x){return x[1]}).concat([0])),bars="",lab="";
  SA.forEach(function(x){var h=mx>0?Math.max(x[1]>0?2:0,Math.round(x[1]/mx*100)):0;
   bars+='<div class="bcol" title="'+x[0]+' : '+x[1]+'"><span class="bv">'+(x[1]>0?x[1]:"")+'</span><div class="bb" style="height:'+h+'%"></div></div>';lab+="<span>"+x[0]+"</span>"});
- var n3=C.R+C.E+C.F+C.S,seg=[["R",C.R+C.E,"#dc3c3d"],["F",C.F,"#fbb315"],["S",C.S,"#0aac23"]],sb="",lg="";
+ var n3=C.R+C.E+C.F+C.S,seg=[["R",C.R+C.E,"#dc3c3d"],["F",C.F,"#fbb315"],["S",C.S,"#0aac23"]],sb="",lg="",ang=0;
  seg.forEach(function(x){var p=n3?Math.round(x[1]/n3*1000)/10:0;
-  if(x[1])sb+='<div style="flex:'+x[1]+';background:'+x[2]+'" title="'+t[x[0]]+' : '+x[1]+' ('+p+' %)"></div>';
+  if(x[1]){var a1=ang+x[1]/n3*2*Math.PI,tt='<title>'+t[x[0]]+' : '+x[1]+' ('+p+' %)</title>';
+   if(x[1]==n3)sb+='<circle cx="50" cy="50" r="48" fill="'+x[2]+'">'+tt+'</circle>';
+   else sb+='<path d="M50 50L'+(50+48*Math.sin(ang)).toFixed(2)+' '+(50-48*Math.cos(ang)).toFixed(2)+'A48 48 0 '+(a1-ang>Math.PI?1:0)+' 1 '+(50+48*Math.sin(a1)).toFixed(2)+' '+(50-48*Math.cos(a1)).toFixed(2)+'Z" fill="'+x[2]+'">'+tt+'</path>';ang=a1}
   lg+='<div class="lgi"><i style="background:'+x[2]+'"></i><span>'+t[x[0]]+'</span><b>'+x[1]+'</b><small>'+p+' %</small></div>'});
  var ch1='<div class="ch"><div class="cht">'+t.ch1+'</div><div class="bc">'+bars+'</div><div class="bl">'+lab+'</div></div>';
- var ch2='<div class="ch"><div class="cht">'+t.ch2+'</div><div class="sb">'+(sb||'<div style="flex:1;background:var(--bd)"></div>')+'</div><div class="lg">'+lg+'</div></div>';
+ var ch2='<div class="ch"><div class="cht">'+t.ch2+'</div><svg class="pie" viewBox="0 0 100 100" role="img" aria-label="'+t.ch2+'">'+(sb||'<circle cx="50" cy="50" r="48" fill="var(--bd)"/>')+'</svg><div class="lg">'+lg+'</div></div>';
  return '<div class="dh"><b>'+t.dT+'</b><span>'+t.dSub+' — '+ml(m)+'</span></div>'
  +'<h2 class="sh">'+t.kI+'</h2><div class="kpis">'+kp(V.length,admin?t.kS:t.st)+kp(AG.length,t.kA)+kp(tot,t.kT2)+kp(C.R+C.E,t.ruptures,'var(--rt)')+'</div>'
  +'<h2 class="sh">'+t.byA2+'</h2><div class="dg"><div class="sc"><table>'+hrow([t.ag,t.tot,t.rup,t.fai,t.suf])+ra+'</table></div>'+ch1+'</div>'
