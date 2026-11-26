@@ -193,6 +193,10 @@ var FB=null,me="",cl=false,authed=false,ME=null,authErr="",dberr=false,USR={},un
 var ORD={},ODR={},OQ={};
 var lang="fr",tab=0,cur=DP,vm=null,yr=null,CFG=null,DEP={},DAT={},db=null,admin=false,ready=false,pend=false,busy=false,tmo,KEY="kv-lang";
 try{lang=localStorage.getItem(KEY)||"fr"}catch(e){}
+/* garder l’onglet ouvert (et l’établissement choisi) après actualisation de la page */
+function sv(){try{localStorage.setItem("kv-tab",tab);localStorage.setItem("kv-cur",cur)}catch(e){}}
+function gT(){try{var v=+localStorage.getItem("kv-tab");return v>=0&&v<=5?v:0}catch(e){return 0}}
+function gC(){try{return localStorage.getItem("kv-cur")||DP}catch(e){return DP}}
 function esc(x){return String(x).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 function ml(m){var q=m.split("-");try{return new Date(+q[0],+q[1]-1,1).toLocaleDateString(lang=="ar"?"ar-u-nu-latn":"fr",{month:"long",year:"numeric"})}catch(e){return m}}
 function nxt(m){var q=m.split("-"),d=new Date(+q[0],+q[1],1);return d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)}
@@ -320,6 +324,7 @@ function render(){var t=T[lang];document.documentElement.lang=lang;document.docu
  if(!CFG)return admin?initUI():msg(t.init);
  if(!admin&&!CFG.structs.some(function(s){return s.id==ME.sid}))return msg(t.noFac);
  nav.innerHTML=t.tabs.map(function(x,i){return '<button class="'+(i==tab?"on":"")+'" data-t="'+i+'">'+(i==5&&!admin?t.myacc:x)+(i==3&&npend(admin?null:ME.sid)?' <span class="s F">'+npend(admin?null:ME.sid)+'</span>':'')+"</button>"}).join("");
+ if(admin&&cur!=DP&&!CFG.structs.some(function(s){return s.id==cur}))cur=DP;
  var m=M();
  var mb=document.getElementById("mb");mb.style.display=tab>=3?"none":"flex";
  mb.innerHTML=cal(m)+(m==CFG.cur?'<span class="s S">'+t.cur+'</span>':'<span class="s F">'+(admin?t.pastA:t.past)+'</span>')+'<span class="who" style="margin-inline-start:auto">'+(admin?t.sup:esc(ME.name||t.agent))+'</span>';
@@ -456,7 +461,7 @@ function adminClick(b){var i=b.id,d=b.dataset||{};
 document.addEventListener("click",function(e){var b=e.target;
  if(adminClick(b)){}else if(b.id=="lg"){lang=lang=="fr"?"ar":"fr";try{localStorage.setItem(KEY,lang)}catch(x){}render()}
  else if(!CFG){return}
- else if(b.dataset&&b.dataset.t!==undefined&&b.closest("nav")){tab=+b.dataset.t;render()}
+ else if(b.dataset&&b.dataset.t!==undefined&&b.closest("nav")){tab=+b.dataset.t;sv();render()}
  else if(b.dataset&&b.dataset.y!==undefined&&b.closest(".cal")){yr=(yr||+M().slice(0,4))+ +b.dataset.y;render()}
  else if(b.dataset&&b.dataset.mo){var mo=b.dataset.mo;if(CFG.months.indexOf(mo)>=0){vm=mo;yr=+mo.slice(0,4);render()}else if(admin&&!busy){if(mo>CFG.cur)openThrough(mo);else if(mo<CFG.months[0])openBefore(mo)}}
   else if(b.id=="as"&&admin){var v=document.getElementById("ns").value.trim();if(!v)return;
@@ -467,7 +472,7 @@ document.addEventListener("change",function(e){var b=e.target;
  if(b.dataset&&b.dataset.oi!==undefined){ODR[AG[+b.dataset.oi]]=b.value}
  else if(b.dataset&&b.dataset.oq){OQ[b.dataset.oq]=b.value}
  else if(b.id=="ms"){vm=b.value;render()}
- else if(b.id=="sel"&&admin){cur=b.value;render()}
+ else if(b.id=="sel"&&admin){cur=b.value;sv();render()}
  else if(b.id=="thr"&&admin){var v=Number(b.value);if(!Number.isInteger(v)||v<1){alert(T[lang].bad);render();return}CFG.thr=v;saveCfg().then(render)}
  else if(b.dataset&&b.dataset.k){var v=Number(b.value),m=M(),a=AG[+b.dataset.i],k=b.dataset.k;if(m!=CFG.cur&&!admin)return;
   if(b.value===""||!Number.isInteger(v)||v<0){alert(T[lang].bad);render();return}
@@ -502,7 +507,7 @@ function afterAuth(u){var uid=u.uid;
  }).catch(function(){if(curUid!=uid)return;authErr="rulesErr";render()})}
 function boot(fb){FB=fb;db=fb.db;ready=true;
  db.doc("meta/owner").get().then(function(x){hasOwner=x.exists;oc=true;render()}).catch(function(){hasOwner=null;oc=true;render()});
- fb.onAuth(function(u){stopAll();authed=!!u;ME=null;admin=false;me=u?u.email:"";authErr="";dberr=false;CFG=null;DEP={};DAT={};USR={};ADM={};ORD={};ODR={};OQ={};cl=false;tab=0;vm=null;yr=null;cur=DP;curUid=u?u.uid:"";
+ fb.onAuth(function(u){stopAll();authed=!!u;ME=null;admin=false;me=u?u.email:"";authErr="";dberr=false;CFG=null;DEP={};DAT={};USR={};ADM={};ORD={};ODR={};OQ={};cl=false;tab=gT();vm=null;yr=null;cur=gC();curUid=u?u.uid:"";
   render();if(!u||setting)return;afterAuth(u)})}
 setTimeout(function(){if(!ready){ready=true;cl=true;render()}},12000);
 </script>
