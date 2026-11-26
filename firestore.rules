@@ -1,0 +1,87 @@
+rules_version = '2';
+// Règles Firestore – Suivi vaccination Kankossa
+// À coller dans : Firebase → Firestore Database → Rules → Publish
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+    function isAdmin() { return signedIn() && exists(/databases/$(database)/documents/admins/$(request.auth.uid)); }
+    function me() { return get(/databases/$(database)/documents/users/$(request.auth.uid)).data; }
+    // membre actif rattaché à un établissement
+    function isMember() {
+      return signedIn() && exists(/databases/$(database)/documents/users/$(request.auth.uid)) && me().get('active', true) != false;
+    }
+    function mySid() { return me().sid; }
+    function curMonth() { return get(/databases/$(database)/documents/config/main).data.cur; }
+
+    // ---- Propriétaire / premier compte ----
+    match /meta/owner {
+      allow read: if true;
+      allow create: if signedIn() && !exists(/databases/$(database)/documents/meta/owner)
+                    && existsAfter(/databases/$(database)/documents/admins/$(request.auth.uid));
+      allow update, delete: if false;
+    }
+
+    // ---- Superviseurs ----
+    match /admins/{uid} {
+      allow read: if isAdmin() || (signedIn() && request.auth.uid == uid);
+      allow create: if isAdmin()
+                    || (signedIn() && request.auth.uid == uid
+                        && !exists(/databases/$(database)/documents/meta/owner)
+                        && existsAfter(/databases/$(database)/documents/meta/owner));
+      allow update: if isAdmin();
+      allow delete: if isAdmin() && resource.data.get('owner', false) != true;
+    }
+
+    // ---- Membres ----
+    match /users/{uid} {
+      allow read: if isAdmin() || (signedIn() && request.auth.uid == uid);
+      allow write: if isAdmin();
+    }
+
+    // ---- Configuration (mois, établissements, seuil) ----
+    match /config/{doc} {
+      allow read: if isAdmin() || isMember();
+      allow write: if isAdmin();
+    }
+
+    // ---- Dépôt Moughataa ----
+    match /depot/{month} {
+      allow read, write: if isAdmin();
+    }
+
+    // ---- Mouvements des établissements : data/{mois}_{établissement} ----
+    match /data/{docId} {
+      // valeur « Entrées » (e) d'un antigène, 0 si absente
+      function oldE(k) { return resource == null ? 0 : resource.data.get(k, {}).get('e', 0); }
+      function newE(k) { return request.resource.data.get(k, {}).get('e', 0); }
+      function sameE(k) { return newE(k) == oldE(k); }
+      // le membre ne peut pas modifier les entrées : elles viennent des commandes validées
+      function entriesUnchanged() {
+        return sameE('HepB') && sameE('BCG') && sameE('VPO') && sameE('HEXA') && sameE('Pneumo')
+            && sameE('Rota') && sameE('RR') && sameE('PVH') && sameE('Td');
+      }
+      function onlyAntigens() {
+        return request.resource.data.keys().hasOnly(['HepB','BCG','VPO','HEXA','Pneumo','Rota','RR','PVH','Td']);
+      }
+
+      allow read: if isAdmin() || (isMember() && docId.split('_').size() == 2 && docId.split('_')[1] == mySid());
+      allow create, update: if isAdmin()
+                            || (isMember() && docId == curMonth() + '_' + mySid()
+                                && onlyAntigens() && entriesUnchanged());
+      allow delete: if isAdmin();
+    }
+
+    // ---- Commandes ----
+    match /orders/{id} {
+      allow read: if isAdmin() || (isMember() && resource.data.sid == mySid());
+      allow create: if isAdmin()
+                    || (isMember() && request.resource.data.sid == mySid()
+                        && request.resource.data.uid == request.auth.uid
+                        && request.resource.data.status == 'pending');
+      allow update: if isAdmin();
+      allow delete: if isAdmin()
+                    || (isMember() && resource.data.uid == request.auth.uid && resource.data.status == 'pending');
+    }
+  }
+}
