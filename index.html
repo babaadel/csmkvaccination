@@ -269,7 +269,7 @@ function mouv(){var t=T[lang],m=M(),isD=admin&&cur==DP,open=m==CFG.cur||(admin&&
  else{head=[t.st,t.ag,t.d,t.kE,t.u,t.a,t.p,t.f,t.stat];
   var SS=admin?(cur==ALL?CFG.structs:CFG.structs.filter(function(x){return x.id==cur})):CFG.structs.filter(function(x){return x.id==ME.sid});
   /* nom de l'établissement affiché une seule fois (cellule fusionnée) ; colonne masquée si un seul établissement */
-  head[0]='<span class="vt">'+(lang=="ar"?"المنشأة":"Structure")+'</span>';
+  head[0]='<span class="vt">'+t.st+'</span>';
   SS.forEach(function(s){var rs=[];AG.forEach(function(a,i){if(fA&&fA!=a)return;var r=sd(m,s.id,a),n=sf(m,s.id,a),q=r.p<0?"E":st(n);if(fS&&fS!=q)return;cnt++;var id=s.id+'_'+i;
    rs.push('<td class="ag">'+L(a)+"</td>"+inp(i,"d",r.d,open,s.id)+inp(i,"e",r.e,open&&admin,s.id)+inp(i,"u",r.u,open,s.id)+inp(i,"a",r.a,open,s.id)+'<td id="p'+id+'">'+pc(r.p)+'</td><td id="f'+id+'"><b>'+n+'</b></td><td id="s'+id+'" class="xs '+q+'">'+t[q]+"</td>")});
    rs.forEach(function(x,k){rows+=(k==0?'<tr class="g1"><td class="sn" rowspan="'+rs.length+'"><span'+(rs.length>=4?' class="vt"':'')+'>'+esc(s.name)+'</span></td>':'<tr>')+x+"</tr>"})})}
