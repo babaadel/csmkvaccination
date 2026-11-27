@@ -2,7 +2,7 @@
    Met en cache l'application pour qu'elle s'ouvre sans Internet.
    Les données (Firestore) ont leur propre cache hors ligne dans la page ; elles ne passent pas par ici.
    À chaque nouvelle version de la plateforme, changer VERSION pour renouveler le cache. */
-const VERSION = 'v1-2026-11-27';
+const VERSION = 'v2-2026-11-27';
 const CACHE = 'kv-app-' + VERSION;
 const SDK = 'https://www.gstatic.com/firebasejs/13.4.0/';
 const SHELL = [
