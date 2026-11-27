@@ -52,15 +52,17 @@ service cloud.firestore {
 
     // ---- Mouvements des établissements : data/{mois}_{établissement} ----
     match /data/{docId} {
-      // valeur « Entrées » (e) d'un antigène, 0 si absente
-      function oldE(k) { return resource == null ? 0 : resource.data.get(k, {}).get('e', 0); }
-      function newE(k) { return request.resource.data.get(k, {}).get('e', 0); }
-      function sameE(k) { return newE(k) == oldE(k); }
-      // le membre ne peut pas modifier les entrées : elles viennent des commandes validées
-      function entriesUnchanged() {
-        return sameE('HepB') && sameE('BCG') && sameE('VPO') && sameE('HEXA') && sameE('Pneumo')
-            && sameE('Rota') && sameE('RR') && sameE('PVH') && sameE('Td');
+      // le membre ne peut modifier ni le stock début (d = report, dl = donné par le dépôt) ni les entrées (e)
+      // (écrit de façon compacte : Firestore limite le nombre d'expressions évaluées par requête)
+      function same(n, o) { return n.get('e', 0) == o.get('e', 0) && n.get('d', 0) == o.get('d', 0) && n.get('dl', 0) == o.get('dl', 0); }
+      function allSame(n, o) {
+        return same(n.get('HepB', {}), o.get('HepB', {})) && same(n.get('BCG', {}), o.get('BCG', {}))
+            && same(n.get('VPO', {}), o.get('VPO', {})) && same(n.get('HEXA', {}), o.get('HEXA', {}))
+            && same(n.get('Pneumo', {}), o.get('Pneumo', {})) && same(n.get('Rota', {}), o.get('Rota', {}))
+            && same(n.get('RR', {}), o.get('RR', {})) && same(n.get('PVH', {}), o.get('PVH', {}))
+            && same(n.get('Td', {}), o.get('Td', {}));
       }
+      function entriesUnchanged() { return allSame(request.resource.data, resource == null ? {} : resource.data); }
       function onlyAntigens() {
         return request.resource.data.keys().hasOnly(['HepB','BCG','VPO','HEXA','Pneumo','Rota','RR','PVH','Td']);
       }
