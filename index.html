@@ -234,7 +234,7 @@ function dash(){var t=T[lang],m=M(),V=VS(),C={R:0,F:0,S:0,E:0},tot=0,ra="",rd=""
   V.forEach(function(s){var n=sf(m,s.id,a),q=st(n);c[q]++;C[q]++;sum+=n});
   tot+=sum;SA.push([L(a),sum]);
   ra+=row([L(a),"<b>"+sum+"</b>",c.R+c.E,c.F,c.S]);
-  if(admin){var r=dd(m,a),n=df(m,a);rd+=row([L(a),r.d,r.r,dist(m,a),"<b>"+n+"</b>",bd(st(n))])}});
+  if(admin){var r=dd(m,a),n=df(m,a);rd+=row([L(a),r.d,r.r,"<b>"+n+"</b>",bd(st(n))])}});
  V.forEach(function(s){var sum=0,r=0,f=0,er=0;AG.forEach(function(a){var n=sf(m,s.id,a),q=st(n);sum+=n;if(q=="R")r++;if(q=="F")f++;if(q=="E"||sd(m,s.id,a).p<0)er++});
   rs+=row([esc(s.name),"<b>"+sum+"</b>",r,f,bd(er?"E":r>0?"R":f>0?"F":"S")])});
  var mx=Math.max.apply(null,SA.map(function(x){return x[1]}).concat([0])),bars="",lab="";
@@ -253,7 +253,7 @@ function dash(){var t=T[lang],m=M(),V=VS(),C={R:0,F:0,S:0,E:0},tot=0,ra="",rd=""
  +'<h2 class="sh">'+t.byA2+'</h2><div class="dg"><div class="sc"><table>'+hrow([t.ag,t.tot,t.rup,t.fai,t.suf])+ra+'</table></div>'+ch1+'</div>'
  +'<h2 class="sh">'+t.byS2+'</h2><div class="dg"><div class="sc"><table>'+hrow([t.st,t.tot,t.ruptures,t.faibles,t.stat])+rs+'</table></div>'+ch2+'</div>'
  +'<div class="sc" style="margin-top:14px;max-width:420px"><table>'+row([bd("R"),"<b>"+(C.R+C.E)+"</b>"])+row([bd("F"),"<b>"+C.F+"</b>"])+row([bd("S"),"<b>"+C.S+"</b>"])+'</table></div>'
- +(admin?'<h2 class="sh">'+t.byD+'</h2><div class="sc"><table>'+hrow([t.ag,t.d,t.r,t.ds,t.f,t.stat])+rd+'</table></div>':'')}
+ +(admin?'<h2 class="sh">'+t.byD+'</h2><div class="sc"><table>'+hrow([t.ag,t.d,t.r,t.f,t.stat])+rd+'</table></div>':'')}
 function inp(i,k,v,ok,sid){return '<td><input type="number" min="0" step="1" inputmode="numeric" data-i="'+i+'" data-k="'+k+'"'+(sid?' data-s="'+sid+'"':'')+' value="'+v+'"'+(ok?"":" disabled")+'></td>'}
 /* Mouvements : une seule table comme la feuille « Mouvements » du fichier Excel (Structure × Antigène), avec filtres */
 var ALL="__all",fA="",fS="";
@@ -263,9 +263,9 @@ function mouv(){var t=T[lang],m=M(),isD=admin&&cur==DP,open=m==CFG.cur||(admin&&
  var fa='<select id="fA"><option value="">'+t.allA+'</option>'+AG.map(function(a){return '<option value="'+a+'"'+(fA==a?" selected":"")+'>'+L(a)+'</option>'}).join("")+'</select>';
  var fs='<select id="fS"><option value="">'+t.allSt+'</option>'+["R","F","S","E"].map(function(q){return '<option value="'+q+'"'+(fS==q?" selected":"")+'>'+t[q]+'</option>'}).join("")+'</select>';
  var head,cnt=0;
- if(isD){head=[t.ag,t.d,t.r,t.ds,t.f,t.stat];
+ if(isD){head=[t.ag,t.d,t.r,t.f,t.stat];
   AG.forEach(function(a,i){if(fA&&fA!=a)return;var r=dd(m,a),n=df(m,a),q=st(n),w=open&&admin;if(fS&&fS!=q)return;cnt++;
-   rows+="<tr><td>"+L(a)+"</td>"+inp(i,"d",r.d,w,DP)+inp(i,"r",r.r,w,DP)+"<td><b>"+dist(m,a)+"</b></td>"+'<td id="f'+DP+'_'+i+'">'+n+'</td><td id="s'+DP+'_'+i+'" class="xs '+q+'">'+t[q]+"</td></tr>"})}
+   rows+="<tr><td>"+L(a)+"</td>"+inp(i,"d",r.d,w,DP)+inp(i,"r",r.r,w,DP)+'<td id="f'+DP+'_'+i+'">'+n+'</td><td id="s'+DP+'_'+i+'" class="xs '+q+'">'+t[q]+"</td></tr>"})}
  else{head=[t.st,t.ag,t.d,t.kE,t.u,t.a,t.p,t.f,t.stat];
   var SS=admin?(cur==ALL?CFG.structs:CFG.structs.filter(function(x){return x.id==cur})):CFG.structs.filter(function(x){return x.id==ME.sid});
   SS.forEach(function(s){AG.forEach(function(a,i){if(fA&&fA!=a)return;var r=sd(m,s.id,a),n=sf(m,s.id,a),q=r.p<0?"E":st(n);if(fS&&fS!=q)return;cnt++;var id=s.id+'_'+i;
@@ -461,10 +461,10 @@ function rpFac(sid,m){var t=T[lang],s=CFG.structs.find(function(z){return z.id==
  return '<section class="pg">'+lh()+'<h3>'+t.rt+'</h3><table class="mt"><tr><td>'+t.st+' : <b>'+esc(s.name)+'</b></td><td>'+t.mois+' : <b>'+ml(m)+'</b></td></tr><tr><td>'+t.by+' : '+esc(mnames(sid)||"—")+'</td><td>'+t.pd+' : '+pdate()+'</td></tr></table>'
  +'<table><tr><th>'+t.ag+'</th><th>'+t.d+'</th><th>'+t.e+'</th><th>'+t.u+'</th><th>'+t.a+'</th><th>'+t.p+'</th><th>'+t.f+'</th><th>'+t.stat+'</th></tr>'+rows+'<tr><th>'+t.totr+'</th><th>'+tt.join('</th><th>')+'</th><th></th></tr></table>'+sig()+'</section>'}
 function rpAll(m){var t=T[lang],rd="",mx="";
- AG.forEach(function(a){var r=dd(m,a),n=df(m,a),q=st(n);rd+="<tr><td>"+L(a)+"</td><td>"+r.d+"</td><td>"+r.r+"</td><td>"+dist(m,a)+"</td><td><b>"+n+'</b></td><td class="p'+q+'">'+t[q]+"</td></tr>"});
+ AG.forEach(function(a){var r=dd(m,a),n=df(m,a),q=st(n);rd+="<tr><td>"+L(a)+"</td><td>"+r.d+"</td><td>"+r.r+"</td><td><b>"+n+'</b></td><td class="p'+q+'">'+t[q]+"</td></tr>"});
  CFG.structs.forEach(function(s){var sum=0;mx+="<tr><td>"+esc(s.name)+"</td>"+AG.map(function(a){var n=sf(m,s.id,a);sum+=n;return '<td class="p'+st(n)+'">'+n+"</td>"}).join("")+"<td><b>"+sum+"</b></td></tr>"});
  var p1='<section class="pg">'+lh()+'<h3>'+t.rtAll+'</h3><table class="mt"><tr><td>'+t.mois+' : <b>'+ml(m)+'</b></td><td>'+t.pd+' : '+pdate()+'</td></tr></table>'
-  +'<h4>'+t.byD+'</h4><table><tr><th>'+t.ag+'</th><th>'+t.d+'</th><th>'+t.r+'</th><th>'+t.ds+'</th><th>'+t.f+'</th><th>'+t.stat+'</th></tr>'+rd+'</table>'
+  +'<h4>'+t.byD+'</h4><table><tr><th>'+t.ag+'</th><th>'+t.d+'</th><th>'+t.r+'</th><th>'+t.f+'</th><th>'+t.stat+'</th></tr>'+rd+'</table>'
   +'<h4>'+t.rmx+'</h4><table><tr><th>'+t.st+'</th>'+AG.map(function(a){return "<th>"+L(a)+"</th>"}).join("")+'<th>'+t.tot+'</th></tr>'+mx+'</table>'+sig()+'</section>';
  return p1+CFG.structs.map(function(s){return rpFac(s.id,m)}).join("")}
 function doPrint(h){if(!h)return;document.getElementById("pr").innerHTML=h;setTimeout(function(){window.print()},80)}
