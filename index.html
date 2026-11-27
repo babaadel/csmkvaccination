@@ -43,6 +43,7 @@ td:first-child,th:first-child{text-align:start}
 .s{display:inline-block;padding:2px 8px;border-radius:99px;font-size:12px;font-weight:700}
 .R{background:var(--r);color:var(--rt)}.F{background:var(--w);color:var(--wt)}.S{background:var(--g);color:var(--gt)}
 td input{width:70px;padding:5px;border:1px solid var(--bd);border-radius:6px;background:var(--bg);color:var(--tx);text-align:center}
+td input[inputmode=numeric]{font-size:16px;min-height:38px;min-width:64px}td input[inputmode=numeric]:focus{outline:3px solid var(--pri);outline-offset:0;background:var(--card)}
 select{padding:8px;border-radius:8px;border:1px solid var(--bd);background:var(--card);color:var(--tx);max-width:100%}
 .bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
 .note{color:var(--mut);font-size:13px;margin-top:10px}
@@ -275,9 +276,9 @@ function dash(){var t=T[lang],m=M(),V=VS(),C={R:0,F:0,S:0,E:0},tot=0,ra="",rd=""
  +(admin?'<h2 class="sh">'+t.byD+'</h2><div class="sc"><table>'+hrow([t.ag,t.d,t.r,t.f,t.stat])+rd+'</table></div>':'')}
 /* champ du membre pour stock début / entrées : en attente tant que le superviseur n'a pas validé */
 function pinp(i,k,v,ok,sid,a){var pk=npSet(sid),pv=pk&&ORD[pk].set[a]&&ORD[pk].set[a][k],sv=PEN[a]&&PEN[a][k];
- if(pv!=null)return '<td><input type="number" class="pnd" value="'+pv+'" disabled title="'+T[lang].pWait+'"></td>';
- return '<td><input type="number" min="0" step="1" inputmode="numeric" data-i="'+i+'" data-k="'+k+'" data-s="'+sid+'"'+(sv!=null?' class="pnd"':'')+' value="'+(sv!=null?sv:v)+'"'+(ok&&!pk?"":" disabled")+'></td>'}
-function inp(i,k,v,ok,sid){return '<td><input type="number" min="0" step="1" inputmode="numeric" data-i="'+i+'" data-k="'+k+'"'+(sid?' data-s="'+sid+'"':'')+' value="'+v+'"'+(ok?"":" disabled")+'></td>'}
+ if(pv!=null)return '<td><input type="text" inputmode="numeric" class="pnd" value="'+pv+'" disabled title="'+T[lang].pWait+'"></td>';
+ return '<td><input type="text" inputmode="numeric" pattern="[0-9]*" enterkeyhint="next" autocomplete="off" data-i="'+i+'" data-k="'+k+'" data-s="'+sid+'"'+(sv!=null?' class="pnd"':'')+' value="'+(sv!=null?sv:v)+'"'+(ok&&!pk?"":" disabled")+'></td>'}
+function inp(i,k,v,ok,sid){return '<td><input type="text" inputmode="numeric" pattern="[0-9]*" enterkeyhint="next" autocomplete="off" data-i="'+i+'" data-k="'+k+'"'+(sid?' data-s="'+sid+'"':'')+' value="'+v+'"'+(ok?"":" disabled")+'></td>'}
 /* Mouvements : une seule table comme la feuille « Mouvements » du fichier Excel (Structure × Antigène), avec filtres */
 var ALL="__all",fA="",fS="";
 function mouv(){var t=T[lang],m=M(),isD=admin&&cur==DP,open=m==CFG.cur||(admin&&CFG.months.indexOf(m)>=0),rows="",o="";
@@ -320,14 +321,14 @@ function oList(ks){var t=T[lang];if(!ks.length)return '<p class="note">'+t.oNone
 function orders(){var t=T[lang],m=CFG.cur,ks=Object.keys(ORD).sort(function(a,b){return (ORD[b].created||0)-(ORD[a].created||0)}),
  P=ks.filter(function(k){return ORD[k].status=="pending"}),D=ks.filter(function(k){return ORD[k].status!="pending"}).slice(0,40);
  if(!admin){var rows="";AG.forEach(function(a,i){var n=sf(m,ME.sid,a),q=st(n),sg=q=="R"||q=="F"?Math.max(0,CFG.thr-n):0,v=ODR[a]!=null?ODR[a]:(sg||"");
-   rows+='<tr'+(sg?' style="background:var(--w)"':'')+'><td>'+L(a)+'</td><td>'+n+'</td><td>'+bd(q)+'</td><td><input type="number" min="0" step="1" inputmode="numeric" data-oi="'+i+'" value="'+v+'"></td></tr>'});
+   rows+='<tr'+(sg?' style="background:var(--w)"':'')+'><td>'+L(a)+'</td><td>'+n+'</td><td>'+bd(q)+'</td><td><input type="text" inputmode="numeric" pattern="[0-9]*" enterkeyhint="next" autocomplete="off" data-oi="'+i+'" value="'+v+'"></td></tr>'});
   return '<h2>'+t.oNew+' — '+esc(sname(ME.sid))+' · '+ml(m)+'</h2><div class="sc"><table>'+hrow([t.ag,t.oCur,t.stat,t.oReq])+rows+'</table></div><p class="note">'+t.oHint+'</p>'
    +'<div class="bar"><input class="fi" id="on" placeholder="'+t.oNote+'" style="flex:1;min-width:180px"><button class="sm pb" id="os">'+t.oSend+'</button></div>'
    +'<h2>'+t.oMine+'</h2>'+oList(ks)}
  var h='<h2>'+t.oPend+' ('+P.length+')</h2>';if(!P.length)h+='<p class="note">'+t.oNone+'</p>';
  P.forEach(function(k){var o=ORD[k],rows="";if(o.kind=="set"){h+=setCard(k);return}
   AG.forEach(function(a,i){var rq=+(o.items&&o.items[a])||0,n=sf(m,o.sid,a),dp=df(m,a),key=k+"_"+a,v=OQ[key]!=null?OQ[key]:(rq?Math.min(rq,Math.max(0,dp)):"");
-   rows+='<tr'+(rq?' style="background:var(--w)"':'')+'><td>'+L(a)+'</td><td>'+n+' '+bd(st(n))+'</td><td>'+dp+'</td><td><b>'+(rq||"—")+'</b></td><td><input type="number" min="0" step="1" inputmode="numeric" data-oq="'+key+'" value="'+v+'"></td></tr>'});
+   rows+='<tr'+(rq?' style="background:var(--w)"':'')+'><td>'+L(a)+'</td><td>'+n+' '+bd(st(n))+'</td><td>'+dp+'</td><td><b>'+(rq||"—")+'</b></td><td><input type="text" inputmode="numeric" pattern="[0-9]*" enterkeyhint="next" autocomplete="off" data-oq="'+key+'" value="'+v+'"></td></tr>'});
   h+='<div class="sc" style="padding:10px 12px;margin-bottom:12px"><div class="bar" style="margin:0 0 6px"><b style="flex:1">'+esc(sname(o.sid))+'</b><span class="note" style="margin:0">'+fdt(o.created)+(o.by?' · '+esc(o.by):'')+'</span></div>'
    +(o.note?'<p class="note" style="margin:0 0 6px">« '+esc(o.note)+' »</p>':'')
    +'<div style="overflow-x:auto"><table>'+hrow([t.ag,t.oCur,t.oDep,t.oReq,t.oGive])+rows+'</table></div>'
@@ -563,6 +564,12 @@ document.addEventListener("click",function(e){var b=e.target;
   else if(b.id=="as"&&admin){var v=document.getElementById("ns").value.trim();if(!v)return;
   if(CFG.structs.some(function(x){return x.name.toLowerCase()==v.toLowerCase()}))alert(T[lang].exists);
   else{var id="s"+Date.now().toString(36);CFG.structs.push({id:id,name:v});aSel=id;try{localStorage.setItem("kv-adm",id)}catch(e){}saveCfg().then(render)}}});
+/* saisie des nombres : tout est sélectionné au toucher (on tape directement), chiffres arabes acceptés, Entrée = champ suivant */
+document.addEventListener("focusin",function(e){var x=e.target;if(x&&x.tagName=="INPUT"&&x.getAttribute("inputmode")=="numeric"&&!x.disabled)setTimeout(function(){try{x.select()}catch(_){}},0)});
+document.addEventListener("input",function(e){var x=e.target;if(!x||x.tagName!="INPUT"||x.getAttribute("inputmode")!="numeric")return;
+ var v=x.value.replace(/[٠-٩]/g,function(c){return c.charCodeAt(0)-1632}).replace(/[۰-۹]/g,function(c){return c.charCodeAt(0)-1776}).replace(/\D/g,"");if(v!==x.value)x.value=v});
+document.addEventListener("keydown",function(e){var x=e.target;if(e.key!="Enter"||!x||x.tagName!="INPUT"||x.getAttribute("inputmode")!="numeric")return;e.preventDefault();
+ var L=[].slice.call(document.querySelectorAll('#app input[inputmode="numeric"]:not([disabled])')),i=L.indexOf(x);if(i>=0&&L[i+1])L[i+1].focus();else x.blur()});
 document.addEventListener("keydown",function(e){if(e.key=="Enter"&&e.target&&(e.target.id=="lp"||e.target.id=="lu"||e.target.id=="su3")){e.target.id=="su3"?doSetup():doLogin()}});
 document.addEventListener("change",function(e){var b=e.target;
  if(b.dataset&&b.dataset.oi!==undefined){ODR[AG[+b.dataset.oi]]=b.value}
