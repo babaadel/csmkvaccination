@@ -300,7 +300,7 @@ function mouv(){var t=T[lang],m=M(),isD=admin&&cur==DP,open=m==CFG.cur||(admin&&
  var ph=admin?'':'<div id="pbx">'+pbH()+'</div>';
  var pb=isD?'':(admin&&cur==ALL?'<button class="sm pb" id="pa">🖨 '+t.prAll+'</button>':'<button class="sm pb" id="pf">🖨 '+t.prB+'</button>');
  return '<div class="bar">'+(admin?'<select id="sel">'+o+'</select>':'<b>'+esc((CFG.structs.find(function(x){return x.id==ME.sid})||{}).name||"")+'</b>')+fa+fs+pb+'<span class="note" style="margin:0">'+cnt+' '+t.lines+'</span></div>'
- +(admin?'<div class="bar"><label>'+t.thr+' <input id="thr" type="number" min="1" step="1" value="'+CFG.thr+'" style="width:70px"></label></div>':'')
+ +(admin?'<div class="bar"><label>'+t.thr+' <input id="thr" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" value="'+CFG.thr+'" style="width:70px"></label></div>':'')
  +ph+'<div class="sc xl"><table>'+hrow(head)+rows+'</table></div><p class="note">'+t.mnote+(admin&&m!=CFG.cur?'<br>'+t.corr:'')+(admin?'':'<br>'+t.mnote2)+'</p>'
 }
 /* Inventaire : même présentation que la feuille « Inventaire » du fichier Excel */
