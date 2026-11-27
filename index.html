@@ -169,7 +169,11 @@ Object.assign(T.fr,{setupT:"Première utilisation : créez le compte du supervis
 Object.assign(T.ar,{setupT:"أول استخدام: أنشئ حساب المشرف",noRole:"هذا الحساب غير مرتبط بأي صلاحية. تواصل مع المشرف.",
  before:function(n){return "إضافة الأشهر من "+n+" إلى أول شهر موجود؟ لترحيل المخزون أدخل بيانات هذه الأشهر ثم راجع مخزون بداية أول شهر موجود."},
  addSup:"إضافة مشرف",sups:"المشرفون",revoke:"سحب الصلاحية",owner:"المالك",supNote2:"كل المشرفين لهم صلاحية كاملة؛ أما الأعضاء فمحصورون في منشآتهم.",revC:"سحب صلاحيات هذا المشرف؟"});
-Object.assign(T.fr,{allS:"Toutes les structures",allA:"Tous les antigènes",allSt:"Tous les statuts",lines:"ligne(s)",invNB:"Stock suivi séparément pour chaque structure et chaque antigène. Aucun stock total multi-antigènes dans l’inventaire.",dT:"TABLEAU DE BORD – VACCINATION",dSub:"Situation des stocks d’antigènes – Circonscription sanitaire de Kankossa",kI:"INDICATEURS CLÉS",byA2:"STATUT DES STOCKS PAR ANTIGÈNE",byS2:"SURVEILLANCE PAR STRUCTURE",ch1:"Stock total par antigène",ch2:"Répartition des structures-antigènes",kT2:"Stock fin total",e:"Entrées (reçues du dépôt)",u:"Doses utilisées",a:"Doses administrées",p:"Pertes",r:"Reçu",ds:"Doses données aux centres",
+Object.assign(T.fr,{r:"Entrées (reçues)",ds:"Livré aux centres (déduit)",
+ nextB:function(a,b){return "Clôturer "+a+" et ouvrir "+b},undoB:function(a){return "Annuler la clôture (rouvrir "+a+")"},addB:function(n){return "Ajouter "+n+" (avant le premier mois)"},
+ cf:function(a,b){return "Clôturer "+a+" et ouvrir "+b+" ?\nLe stock fin de "+a+" deviendra le stock début de "+b+". Les membres ne pourront plus modifier "+a+".\nEn cas d’erreur : bouton « Annuler la clôture »."},
+ undoC:function(a,b){return "Annuler la clôture de "+b+" ?\n"+a+" sera supprimé et "+b+" redeviendra le mois en cours.\nToutes les données saisies en "+a+" seront effacées et les commandes livrées en "+a+" repasseront « en attente »."},
+ allS:"Toutes les structures",allA:"Tous les antigènes",allSt:"Tous les statuts",lines:"ligne(s)",invNB:"Stock suivi séparément pour chaque structure et chaque antigène. Aucun stock total multi-antigènes dans l’inventaire.",dT:"TABLEAU DE BORD – VACCINATION",dSub:"Situation des stocks d’antigènes – Circonscription sanitaire de Kankossa",kI:"INDICATEURS CLÉS",byA2:"STATUT DES STOCKS PAR ANTIGÈNE",byS2:"SURVEILLANCE PAR STRUCTURE",ch1:"Stock total par antigène",ch2:"Répartition des structures-antigènes",kT2:"Stock fin total",e:"Entrées (reçues du dépôt)",u:"Doses utilisées",a:"Doses administrées",p:"Pertes",r:"Entrées (reçues)",ds:"Livré aux centres (déduit)",
  hMv:"Indicateurs des mouvements",hSt:"Indicateurs de stock",kE:"Entrées",kU:"Doses utilisées",kAd:"Doses administrées",kP:"Pertes",kTP:"Taux de perte",kSu:"Stocks suffisants",kO:"Commandes en attente",
  totC:"TOTAL CIRCONSCRIPTION",seed:"Importer les 29 établissements de la circonscription",seedOk:function(n){return n+" établissement(s) ajouté(s)."},
  mnote:"Stock fin = stock début + entrées − doses utilisées. Pertes = doses utilisées − doses administrées (calcul automatique). Les entrées d’un établissement proviennent des commandes validées par le superviseur et sont déduites automatiquement du stock du dépôt Moughataa.",
@@ -179,8 +183,12 @@ Object.assign(T.fr,{allS:"Toutes les structures",allA:"Tous les antigènes",allS
  oSent:"Commande envoyée au superviseur.",dNeg:function(a,n){return "Refusé : le stock du dépôt pour "+a+" ne peut pas devenir négatif (déjà donné aux centres : "+n+")."},oEmpty:"Saisissez au moins une quantité.",oOver:function(a,n){return "Stock du dépôt insuffisant pour "+a+" (disponible : "+n+")."},
  oApC:function(n,m){return "Valider la livraison pour « "+n+" » ?\nLes quantités seront ajoutées aux entrées de l’établissement ("+m+") et déduites du stock du dépôt."},oRejC:"Refuser cette commande ?",oCanC:"Annuler cette commande ?",
  oHint:"Les quantités sont pré-remplies pour les antigènes en rupture ou en stock faible (jusqu’au seuil). Modifiez-les si besoin.",oBy:"Demandé par",oDate:"Date",oGone:"Établissement supprimé",
- guide:["Objectif : suivre en temps réel le stock de chaque antigène dans les établissements de la circonscription sanitaire de Kankossa.","Mouvements : saisir pour chaque antigène le stock début, les doses utilisées et les doses administrées. Les pertes (utilisées − administrées) et le stock fin (début + entrées − utilisées) sont calculés automatiquement. Le tableau de bord et l’inventaire sont directement liés aux mouvements et se mettent à jour automatiquement.","Dépôt Moughataa : c’est le distributeur principal des établissements. Tout ce que reçoit un établissement est automatiquement déduit du stock du dépôt.","Commandes : le membre envoie la liste de ses besoins (pré-remplie avec les ruptures et stocks faibles). Le superviseur la reçoit, saisit les quantités à livrer et valide : elles entrent dans le stock de l’établissement (mois en cours) et sont déduites du dépôt.","Inventaire : stock fin de chaque antigène pour chaque établissement, avec le total de la circonscription par antigène.","Statut : RUPTURE = 0 dose ; STOCK FAIBLE = 1 jusqu’au seuil − 1 ; STOCK SUFFISANT = seuil ou plus (20 par défaut, paramétrable). Un stock négatif ou des doses administrées supérieures aux doses utilisées sont signalés en ERREUR.","Le mois en cours est le dernier mois ouvert. Le superviseur ouvre un nouveau mois depuis le calendrier ; le stock fin est reporté en stock début. Seul le superviseur modifie le dépôt, les entrées, le seuil et les mois passés.","Contrôle : comparer régulièrement le stock théorique au stock physique et vérifier les lots, dates de péremption et observations.","Impression : « Imprimer le rapport » produit un rapport A4 (enregistrable en PDF) par établissement ; le superviseur imprime aussi le rapport collectif."]});
-Object.assign(T.ar,{allS:"كل المنشآت",allA:"كل اللقاحات",allSt:"كل الحالات",lines:"سطر",invNB:"يُتابَع المخزون منفصلاً لكل منشأة ولكل لقاح. لا يوجد في الجرد مجموع يجمع عدة لقاحات.",dT:"لوحة قيادة التلقيح",dSub:"وضعية مخزون اللقاحات – الدائرة الصحية بكنكوصة",kI:"المؤشرات الرئيسية",byA2:"حالة المخزون حسب اللقاح",byS2:"المراقبة حسب المنشأة",ch1:"إجمالي المخزون حسب اللقاح",ch2:"توزيع الثنائيات (منشأة – لقاح)",kT2:"إجمالي المخزون النهائي",e:"الوارد (من المستودع)",u:"الجرعات المستعملة",a:"الجرعات المعطاة",p:"الضائع",r:"المستلم",ds:"الجرعات المعطاة للمراكز",
+ guide:["Objectif : suivre en temps réel le stock de chaque antigène dans les établissements de la circonscription sanitaire de Kankossa.","Mouvements : saisir pour chaque antigène le stock début, les doses utilisées et les doses administrées. Les pertes (utilisées − administrées) et le stock fin (début + entrées − utilisées) sont calculés automatiquement. Le tableau de bord et l’inventaire sont directement liés aux mouvements et se mettent à jour automatiquement.","Dépôt Moughataa : c’est le distributeur principal des établissements ; il ne consomme pas (ni doses administrées ni pertes). Tout ce que reçoit un établissement est automatiquement déduit du stock du dépôt.","Commandes : le membre envoie la liste de ses besoins (pré-remplie avec les ruptures et stocks faibles). Le superviseur la reçoit, saisit les quantités à livrer et valide : elles entrent dans le stock de l’établissement (mois en cours) et sont déduites du dépôt.","Inventaire : stock fin de chaque antigène pour chaque établissement, avec le total de la circonscription par antigène.","Statut : RUPTURE = 0 dose ; STOCK FAIBLE = 1 jusqu’au seuil − 1 ; STOCK SUFFISANT = seuil ou plus (20 par défaut, paramétrable). Un stock négatif ou des doses administrées supérieures aux doses utilisées sont signalés en ERREUR.","Le mois en cours est le dernier mois ouvert. Le superviseur choisit le mois dans la liste déroulante et ouvre le mois suivant avec le bouton « Clôturer … et ouvrir … » ; le stock fin est reporté en stock début. En cas d’erreur, le bouton « Annuler la clôture » rouvre le mois précédent. Seul le superviseur modifie le dépôt, les entrées, le seuil et les mois passés.","Contrôle : comparer régulièrement le stock théorique au stock physique et vérifier les lots, dates de péremption et observations.","Impression : « Imprimer le rapport » produit un rapport A4 (enregistrable en PDF) par établissement ; le superviseur imprime aussi le rapport collectif."]});
+Object.assign(T.ar,{r:"الوارد إلى المستودع",ds:"المُسلَّم للمراكز (يُخصم)",
+ nextB:function(a,b){return "إغلاق "+a+" وفتح "+b},undoB:function(a){return "تراجع عن الإغلاق (إعادة فتح "+a+")"},addB:function(n){return "إضافة "+n+" (قبل أول شهر)"},
+ cf:function(a,b){return "إغلاق "+a+" وفتح "+b+"؟\nسيصبح مخزون نهاية "+a+" هو مخزون بداية "+b+"، ولن يتمكن الأعضاء من تعديل "+a+".\nعند الخطأ: زر «تراجع عن الإغلاق»."},
+ undoC:function(a,b){return "التراجع عن إغلاق "+b+"؟\nسيُحذف "+a+" ويعود "+b+" هو الشهر الجاري.\nستُمسح كل البيانات المدخلة في "+a+"، وتعود الطلبيات المسلّمة في "+a+" إلى «في الانتظار»."},
+ allS:"كل المنشآت",allA:"كل اللقاحات",allSt:"كل الحالات",lines:"سطر",invNB:"يُتابَع المخزون منفصلاً لكل منشأة ولكل لقاح. لا يوجد في الجرد مجموع يجمع عدة لقاحات.",dT:"لوحة قيادة التلقيح",dSub:"وضعية مخزون اللقاحات – الدائرة الصحية بكنكوصة",kI:"المؤشرات الرئيسية",byA2:"حالة المخزون حسب اللقاح",byS2:"المراقبة حسب المنشأة",ch1:"إجمالي المخزون حسب اللقاح",ch2:"توزيع الثنائيات (منشأة – لقاح)",kT2:"إجمالي المخزون النهائي",e:"الوارد (من المستودع)",u:"الجرعات المستعملة",a:"الجرعات المعطاة",p:"الضائع",r:"الوارد إلى المستودع",ds:"المُسلَّم للمراكز (يُخصم)",
  hMv:"مؤشرات الحركات",hSt:"مؤشرات المخزون",kE:"الوارد",kU:"الجرعات المستعملة",kAd:"الجرعات المعطاة",kP:"الضائع",kTP:"نسبة الضياع",kSu:"مخزون كافٍ",kO:"طلبيات في الانتظار",
  totC:"مجموع الدائرة الصحية",seed:"استيراد المنشآت الـ29 التابعة للدائرة",seedOk:function(n){return "تمت إضافة "+n+" منشأة."},
  mnote:"المخزون النهائي = مخزون البداية + الوارد − الجرعات المستعملة. الضائع = المستعملة − المعطاة (يُحسب تلقائياً). وارد المنشأة يأتي من الطلبيات التي يوافق عليها المشرف، ويُخصم تلقائياً من مخزون مستودع المقاطعة.",
@@ -190,7 +198,7 @@ Object.assign(T.ar,{allS:"كل المنشآت",allA:"كل اللقاحات",allS
  oSent:"تم إرسال الطلبية إلى المشرف.",dNeg:function(a,n){return "مرفوض: لا يمكن أن يصبح مخزون المستودع من "+a+" سالباً (المعطى للمراكز: "+n+")."},oEmpty:"أدخل كمية واحدة على الأقل.",oOver:function(a,n){return "مخزون المستودع غير كافٍ لـ "+a+" (المتوفر: "+n+")."},
  oApC:function(n,m){return "الموافقة على التسليم لـ «"+n+"»؟\nستُضاف الكميات إلى وارد المنشأة ("+m+") وتُخصم من مخزون المستودع."},oRejC:"رفض هذه الطلبية؟",oCanC:"إلغاء هذه الطلبية؟",
  oHint:"الكميات معبأة مسبقاً للقاحات النافدة أو ذات المخزون الضعيف (حتى الحد). عدّلها عند الحاجة.",oBy:"الطالب",oDate:"التاريخ",oGone:"منشأة محذوفة",
- guide:["الهدف: متابعة مخزون كل لقاح في منشآت الدائرة الصحية بكنكوصة في الوقت الفعلي.","الحركات: أدخل لكل لقاح مخزون البداية والجرعات المستعملة والجرعات المعطاة. ويُحسب الضائع (المستعملة − المعطاة) والمخزون النهائي (البداية + الوارد − المستعملة) تلقائياً. لوحة القيادة والجرد مرتبطان مباشرة بالحركات ويتحدّثان تلقائياً.","مستودع المقاطعة: هو الموزع الرئيسي للمنشآت. كل ما تستلمه منشأة يُخصم تلقائياً من مخزون المستودع.","الطلبيات: يرسل العضو لائحة نواقصه (معبأة مسبقاً بالنفاد والمخزون الضعيف). يستلمها المشرف فيعبئ الكميات المسلّمة ويضغط موافق، فتدخل في مخزون المنشأة (الشهر الجاري) وتُخصم من المستودع.","الجرد: المخزون النهائي لكل لقاح في كل منشأة، مع مجموع الدائرة لكل لقاح.","الحالة: نفاد = 0 جرعة؛ مخزون ضعيف = من 1 إلى الحد − 1؛ مخزون كافٍ = الحد أو أكثر (20 افتراضياً وقابل للتعديل). المخزون السالب أو جرعات معطاة أكثر من المستعملة تظهر «خطأ».","الشهر الجاري هو آخر شهر مفتوح. يفتح المشرف شهراً جديداً من التقويم فيُرحَّل مخزون النهاية إلى البداية. المشرف وحده يعدّل المستودع والوارد والحد والأشهر السابقة.","الضبط: قارن بانتظام المخزون النظري بالمخزون الفعلي وراجع الدفعات وتواريخ انتهاء الصلاحية والملاحظات.","الطباعة: زر «طباعة التقرير» يُنتج تقريراً بحجم A4 (يمكن حفظه PDF) لكل منشأة؛ ويطبع المشرف أيضاً التقرير الجماعي."]});
+ guide:["الهدف: متابعة مخزون كل لقاح في منشآت الدائرة الصحية بكنكوصة في الوقت الفعلي.","الحركات: أدخل لكل لقاح مخزون البداية والجرعات المستعملة والجرعات المعطاة. ويُحسب الضائع (المستعملة − المعطاة) والمخزون النهائي (البداية + الوارد − المستعملة) تلقائياً. لوحة القيادة والجرد مرتبطان مباشرة بالحركات ويتحدّثان تلقائياً.","مستودع المقاطعة: هو الموزع الرئيسي للمنشآت ولا يستهلك (لا جرعات معطاة ولا ضائع). كل ما تستلمه منشأة يُخصم تلقائياً من مخزون المستودع.","الطلبيات: يرسل العضو لائحة نواقصه (معبأة مسبقاً بالنفاد والمخزون الضعيف). يستلمها المشرف فيعبئ الكميات المسلّمة ويضغط موافق، فتدخل في مخزون المنشأة (الشهر الجاري) وتُخصم من المستودع.","الجرد: المخزون النهائي لكل لقاح في كل منشأة، مع مجموع الدائرة لكل لقاح.","الحالة: نفاد = 0 جرعة؛ مخزون ضعيف = من 1 إلى الحد − 1؛ مخزون كافٍ = الحد أو أكثر (20 افتراضياً وقابل للتعديل). المخزون السالب أو جرعات معطاة أكثر من المستعملة تظهر «خطأ».","الشهر الجاري هو آخر شهر مفتوح. يختار المشرف الشهر من القائمة المنسدلة ويفتح الشهر الموالي بزر «إغلاق … وفتح …» فيُرحَّل مخزون النهاية إلى البداية. وعند الخطأ يعيد زر «تراجع عن الإغلاق» فتح الشهر السابق. المشرف وحده يعدّل المستودع والوارد والحد والأشهر السابقة.","الضبط: قارن بانتظام المخزون النظري بالمخزون الفعلي وراجع الدفعات وتواريخ انتهاء الصلاحية والملاحظات.","الطباعة: زر «طباعة التقرير» يُنتج تقريراً بحجم A4 (يمكن حفظه PDF) لكل منشأة؛ ويطبع المشرف أيضاً التقرير الجماعي."]});
 var FB=null,me="",cl=false,authed=false,ME=null,authErr="",dberr=false,USR={},unsubs=[],memSub={},curUid="",hasOwner=null,oc=false,setting=false,ADM={};
 var ORD={},ODR={},OQ={};
 var lang="fr",tab=0,cur=DP,vm=null,yr=null,CFG=null,DEP={},DAT={},db=null,admin=false,ready=false,pend=false,busy=false,tmo,KEY="kv-lang";
@@ -215,7 +223,8 @@ function pc(p){return p<0?'<span class="s E">'+p+'</span>':p}
 function kp(n,l,c){return '<div class="k"><b'+(c?' style="color:'+c+'"':'')+'>'+n+'</b><span>'+l+'</span></div>'}
 function npend(sid){return Object.keys(ORD).filter(function(k){return ORD[k].status=="pending"&&(!sid||ORD[k].sid==sid)}).length}
 function dist(m,a){return CFG.structs.reduce(function(t,s){return t+sd(m,s.id,a).e},0)}
-function df(m,a){var r=dd(m,a);return r.d+r.r-dist(m,a)-r.p}
+/* le dépôt ne consomme pas : stock fin = début + reçu − livré aux centres */
+function df(m,a){var r=dd(m,a);return r.d+r.r-dist(m,a)}
 function st(n){return n<0?"E":n==0?"R":n<CFG.thr?"F":"S"}
 function bd(c){return '<span class="s '+c+'">'+T[lang][c]+'</span>'}
 function hasErr(m){return AG.some(function(a){return df(m,a)<0||CFG.structs.some(function(s){return sf(m,s.id,a)<0||sd(m,s.id,a).p<0})})}
@@ -225,7 +234,7 @@ function dash(){var t=T[lang],m=M(),V=VS(),C={R:0,F:0,S:0,E:0},tot=0,ra="",rd=""
   V.forEach(function(s){var n=sf(m,s.id,a),q=st(n);c[q]++;C[q]++;sum+=n});
   tot+=sum;SA.push([L(a),sum]);
   ra+=row([L(a),"<b>"+sum+"</b>",c.R+c.E,c.F,c.S]);
-  if(admin){var r=dd(m,a),n=df(m,a);rd+=row([L(a),r.d,r.r,dist(m,a),r.p,"<b>"+n+"</b>",bd(st(n))])}});
+  if(admin){var r=dd(m,a),n=df(m,a);rd+=row([L(a),r.d,r.r,dist(m,a),"<b>"+n+"</b>",bd(st(n))])}});
  V.forEach(function(s){var sum=0,r=0,f=0,er=0;AG.forEach(function(a){var n=sf(m,s.id,a),q=st(n);sum+=n;if(q=="R")r++;if(q=="F")f++;if(q=="E"||sd(m,s.id,a).p<0)er++});
   rs+=row([esc(s.name),"<b>"+sum+"</b>",r,f,bd(er?"E":r>0?"R":f>0?"F":"S")])});
  var mx=Math.max.apply(null,SA.map(function(x){return x[1]}).concat([0])),bars="",lab="";
@@ -244,7 +253,7 @@ function dash(){var t=T[lang],m=M(),V=VS(),C={R:0,F:0,S:0,E:0},tot=0,ra="",rd=""
  +'<h2 class="sh">'+t.byA2+'</h2><div class="dg"><div class="sc"><table>'+hrow([t.ag,t.tot,t.rup,t.fai,t.suf])+ra+'</table></div>'+ch1+'</div>'
  +'<h2 class="sh">'+t.byS2+'</h2><div class="dg"><div class="sc"><table>'+hrow([t.st,t.tot,t.ruptures,t.faibles,t.stat])+rs+'</table></div>'+ch2+'</div>'
  +'<div class="sc" style="margin-top:14px;max-width:420px"><table>'+row([bd("R"),"<b>"+(C.R+C.E)+"</b>"])+row([bd("F"),"<b>"+C.F+"</b>"])+row([bd("S"),"<b>"+C.S+"</b>"])+'</table></div>'
- +(admin?'<h2 class="sh">'+t.byD+'</h2><div class="sc"><table>'+hrow([t.ag,t.d,t.r,t.ds,t.p,t.f,t.stat])+rd+'</table></div>':'')}
+ +(admin?'<h2 class="sh">'+t.byD+'</h2><div class="sc"><table>'+hrow([t.ag,t.d,t.r,t.ds,t.f,t.stat])+rd+'</table></div>':'')}
 function inp(i,k,v,ok,sid){return '<td><input type="number" min="0" step="1" inputmode="numeric" data-i="'+i+'" data-k="'+k+'"'+(sid?' data-s="'+sid+'"':'')+' value="'+v+'"'+(ok?"":" disabled")+'></td>'}
 /* Mouvements : une seule table comme la feuille « Mouvements » du fichier Excel (Structure × Antigène), avec filtres */
 var ALL="__all",fA="",fS="";
@@ -254,9 +263,9 @@ function mouv(){var t=T[lang],m=M(),isD=admin&&cur==DP,open=m==CFG.cur||(admin&&
  var fa='<select id="fA"><option value="">'+t.allA+'</option>'+AG.map(function(a){return '<option value="'+a+'"'+(fA==a?" selected":"")+'>'+L(a)+'</option>'}).join("")+'</select>';
  var fs='<select id="fS"><option value="">'+t.allSt+'</option>'+["R","F","S","E"].map(function(q){return '<option value="'+q+'"'+(fS==q?" selected":"")+'>'+t[q]+'</option>'}).join("")+'</select>';
  var head,cnt=0;
- if(isD){head=[t.ag,t.d,t.r,t.ds,t.p,t.f,t.stat];
+ if(isD){head=[t.ag,t.d,t.r,t.ds,t.f,t.stat];
   AG.forEach(function(a,i){if(fA&&fA!=a)return;var r=dd(m,a),n=df(m,a),q=st(n),w=open&&admin;if(fS&&fS!=q)return;cnt++;
-   rows+="<tr><td>"+L(a)+"</td>"+inp(i,"d",r.d,w,DP)+inp(i,"r",r.r,w,DP)+"<td><b>"+dist(m,a)+"</b></td>"+inp(i,"p",r.p,w,DP)+'<td id="f'+DP+'_'+i+'">'+n+'</td><td id="s'+DP+'_'+i+'" class="xs '+q+'">'+t[q]+"</td></tr>"})}
+   rows+="<tr><td>"+L(a)+"</td>"+inp(i,"d",r.d,w,DP)+inp(i,"r",r.r,w,DP)+"<td><b>"+dist(m,a)+"</b></td>"+'<td id="f'+DP+'_'+i+'">'+n+'</td><td id="s'+DP+'_'+i+'" class="xs '+q+'">'+t[q]+"</td></tr>"})}
  else{head=[t.st,t.ag,t.d,t.kE,t.u,t.a,t.p,t.f,t.stat];
   var SS=admin?(cur==ALL?CFG.structs:CFG.structs.filter(function(x){return x.id==cur})):CFG.structs.filter(function(x){return x.id==ME.sid});
   SS.forEach(function(s){AG.forEach(function(a,i){if(fA&&fA!=a)return;var r=sd(m,s.id,a),n=sf(m,s.id,a),q=r.p<0?"E":st(n);if(fS&&fS!=q)return;cnt++;var id=s.id+'_'+i;
@@ -338,18 +347,27 @@ function render(){var t=T[lang];document.documentElement.lang=lang;document.docu
  if(admin&&cur!=DP&&cur!=ALL&&!CFG.structs.some(function(s){return s.id==cur}))cur=DP;
  var m=M();
  var mb=document.getElementById("mb");mb.style.display=tab>=3?"none":"flex";
- mb.innerHTML=cal(m)+(m==CFG.cur?'<span class="s S">'+t.cur+'</span>':'<span class="s F">'+(admin?t.pastA:t.past)+'</span>')+'<span class="who" style="margin-inline-start:auto">'+(admin?t.sup:esc(ME.name||t.agent))+'</span>';
+ mb.innerHTML=msel(m)+(m==CFG.cur?'<span class="s S">'+t.cur+'</span>':'<span class="s F">'+(admin?t.pastA:t.past)+'</span>')+'<span class="who" style="margin-inline-start:auto">'+(admin?t.sup:esc(ME.name||t.agent))+'</span>';
  document.getElementById("app").innerHTML=[dash,mouv,inv,orders,guide,admin?adm:acc][tab]();}
 function rr(){var a=document.activeElement;if(a&&a.tagName=="INPUT"&&a.closest("#app")){pend=true}else render()}
 function wr(pr){return pr.catch(function(){alert(T[lang].noW);render()})}
 function saveCfg(){return wr(db.doc("config/main").set(CFG))}
-function cal(m){var y=yr||+m.slice(0,4),h='<div class="cal"><div class="yr"><button class="sm" data-y="-1">‹</button><span>'+y+'</span><button class="sm" data-y="1">›</button></div><div class="g">',first=CFG.months[0];
- for(var i=1;i<=12;i++){var id=y+"-"+("0"+i).slice(-2),fut=CFG.months.indexOf(id)<0,dis=fut&&!admin,
-  nm=new Date(y,i-1,1).toLocaleDateString(lang=="ar"?"ar-u-nu-latn":"fr",{month:"long"});
-  h+='<button data-mo="'+id+'" class="'+(id==m?"on ":"")+(id==CFG.cur?"cu ":"")+(fut?"fu":"")+'"'+(dis?" disabled":"")+'>'+nm+'</button>'}
- return h+'</div></div>'}
+function prv(m){var q=m.split("-"),d=new Date(+q[0],+q[1]-2,1);return d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)}
+/* sélecteur de mois (liste déroulante) + clôture / annulation de la clôture */
+function msel(m){var t=T[lang],L2=CFG.months.length,h='<select id="ms">'+CFG.months.slice().reverse().map(function(x){return '<option value="'+x+'"'+(x==m?" selected":"")+'>'+ml(x)+(x==CFG.cur?" — "+t.cur:"")+'</option>'}).join("")
+  +(admin?'<option value="__before">+ '+t.addB(ml(prv(CFG.months[0])))+'</option>':'')+'</select>';
+ if(admin){h+='<button class="sm" id="mnext">'+t.nextB(ml(CFG.cur),ml(nxt(CFG.cur)))+'</button>';
+  if(L2>1)h+='<button class="sm" id="mundo">↶ '+t.undoB(ml(CFG.months[L2-2]))+'</button>'}
+ return h}
+function undoClose(){var t=T[lang],L2=CFG.months.length;if(L2<2||busy)return;var m=CFG.cur,pm=CFG.months[L2-2];
+ if(!confirm(t.undoC(ml(m),ml(pm))))return;busy=true;render();var ps=[];
+ for(var id in (DAT[m]||{}))ps.push(db.doc("data/"+m+"_"+id).delete());
+ if(DEP[m])ps.push(db.doc("depot/"+m).delete());
+ for(var k in ORD){var o=ORD[k];if(o.status=="approved"&&o.dm==m){var no=Object.assign({},o,{status:"pending"});["dlv","dm","dAt","dBy"].forEach(function(f){Reflect.deleteProperty(no,f)});ps.push(db.doc("orders/"+k).set(no))}}
+ var c=JSON.parse(JSON.stringify(CFG));c.months=c.months.filter(function(x){return x!=m});c.cur=pm;
+ Promise.all(ps).then(function(){return db.doc("config/main").set(c)}).then(function(){vm=null}).catch(function(){alert(t.noW)}).then(function(){busy=false;render()})}
 function openThrough(n){var t=T[lang];if(hasErr(CFG.cur)){alert(t.err);return}
- if(!confirm(t.thru(ml(n))))return;busy=true;render();
+ if(!confirm(n==nxt(CFG.cur)?t.cf(ml(CFG.cur),ml(n)):t.thru(ml(n))))return;busy=true;render();
  var ps=[],c=JSON.parse(JSON.stringify(CFG)),m=c.cur,carry={},cd={},kd=0;
  CFG.structs.forEach(function(s){var o={},k=0;AG.forEach(function(a){var v=sf(m,s.id,a);if(v>0){o[a]={d:v,e:0,u:0,a:0};k++}});if(k)carry[s.id]=o});
  AG.forEach(function(a){var v=df(m,a);if(v>0){cd[a]={d:v,r:0,p:0};kd++}});
@@ -443,10 +461,10 @@ function rpFac(sid,m){var t=T[lang],s=CFG.structs.find(function(z){return z.id==
  return '<section class="pg">'+lh()+'<h3>'+t.rt+'</h3><table class="mt"><tr><td>'+t.st+' : <b>'+esc(s.name)+'</b></td><td>'+t.mois+' : <b>'+ml(m)+'</b></td></tr><tr><td>'+t.by+' : '+esc(mnames(sid)||"—")+'</td><td>'+t.pd+' : '+pdate()+'</td></tr></table>'
  +'<table><tr><th>'+t.ag+'</th><th>'+t.d+'</th><th>'+t.e+'</th><th>'+t.u+'</th><th>'+t.a+'</th><th>'+t.p+'</th><th>'+t.f+'</th><th>'+t.stat+'</th></tr>'+rows+'<tr><th>'+t.totr+'</th><th>'+tt.join('</th><th>')+'</th><th></th></tr></table>'+sig()+'</section>'}
 function rpAll(m){var t=T[lang],rd="",mx="";
- AG.forEach(function(a){var r=dd(m,a),n=df(m,a),q=st(n);rd+="<tr><td>"+L(a)+"</td><td>"+r.d+"</td><td>"+r.r+"</td><td>"+dist(m,a)+"</td><td>"+r.p+"</td><td><b>"+n+'</b></td><td class="p'+q+'">'+t[q]+"</td></tr>"});
+ AG.forEach(function(a){var r=dd(m,a),n=df(m,a),q=st(n);rd+="<tr><td>"+L(a)+"</td><td>"+r.d+"</td><td>"+r.r+"</td><td>"+dist(m,a)+"</td><td><b>"+n+'</b></td><td class="p'+q+'">'+t[q]+"</td></tr>"});
  CFG.structs.forEach(function(s){var sum=0;mx+="<tr><td>"+esc(s.name)+"</td>"+AG.map(function(a){var n=sf(m,s.id,a);sum+=n;return '<td class="p'+st(n)+'">'+n+"</td>"}).join("")+"<td><b>"+sum+"</b></td></tr>"});
  var p1='<section class="pg">'+lh()+'<h3>'+t.rtAll+'</h3><table class="mt"><tr><td>'+t.mois+' : <b>'+ml(m)+'</b></td><td>'+t.pd+' : '+pdate()+'</td></tr></table>'
-  +'<h4>'+t.byD+'</h4><table><tr><th>'+t.ag+'</th><th>'+t.d+'</th><th>'+t.r+'</th><th>'+t.ds+'</th><th>'+t.p+'</th><th>'+t.f+'</th><th>'+t.stat+'</th></tr>'+rd+'</table>'
+  +'<h4>'+t.byD+'</h4><table><tr><th>'+t.ag+'</th><th>'+t.d+'</th><th>'+t.r+'</th><th>'+t.ds+'</th><th>'+t.f+'</th><th>'+t.stat+'</th></tr>'+rd+'</table>'
   +'<h4>'+t.rmx+'</h4><table><tr><th>'+t.st+'</th>'+AG.map(function(a){return "<th>"+L(a)+"</th>"}).join("")+'<th>'+t.tot+'</th></tr>'+mx+'</table>'+sig()+'</section>';
  return p1+CFG.structs.map(function(s){return rpFac(s.id,m)}).join("")}
 function doPrint(h){if(!h)return;document.getElementById("pr").innerHTML=h;setTimeout(function(){window.print()},80)}
@@ -467,14 +485,12 @@ function adminClick(b){var i=b.id,d=b.dataset||{};
  if(i=="ini"){var m=gv("im");if(m){var now=new Date().toISOString().slice(0,7),ms=[m];for(var x=nxt(m);x<=now;x=nxt(x))ms.push(x);var k0=Date.now().toString(36);CFG={cur:ms[ms.length-1],months:ms,structs:SEED.map(function(n,j){return {id:"s"+k0+j,name:n}}),thr:20};saveCfg().then(render)}return true}
  if(i=="rp"){FB.reset(me).then(function(){alert(T[lang].sent)});return true}
  if(i=="rs"){resetAll();return true}
- if(i=="sd"){seedS();return true}if(d.oa){approveOrder(d.oa,b);return true}if(d.or){rejectOrder(d.or);return true}if(d.rn){renS(d.rn);return true}if(d.dl){delS(d.dl);return true}
+ if(i=="sd"){seedS();return true}if(i=="mnext"){if(!busy)openThrough(nxt(CFG.cur));return true}if(i=="mundo"){undoClose();return true}if(d.oa){approveOrder(d.oa,b);return true}if(d.or){rejectOrder(d.or);return true}if(d.rn){renS(d.rn);return true}if(d.dl){delS(d.dl);return true}
  return false}
 document.addEventListener("click",function(e){var b=e.target;
  if(adminClick(b)){}else if(b.id=="lg"){lang=lang=="fr"?"ar":"fr";try{localStorage.setItem(KEY,lang)}catch(x){}render()}
  else if(!CFG){return}
  else if(b.dataset&&b.dataset.t!==undefined&&b.closest("nav")){tab=+b.dataset.t;sv();render()}
- else if(b.dataset&&b.dataset.y!==undefined&&b.closest(".cal")){yr=(yr||+M().slice(0,4))+ +b.dataset.y;render()}
- else if(b.dataset&&b.dataset.mo){var mo=b.dataset.mo;if(CFG.months.indexOf(mo)>=0){vm=mo;yr=+mo.slice(0,4);render()}else if(admin&&!busy){if(mo>CFG.cur)openThrough(mo);else if(mo<CFG.months[0])openBefore(mo)}}
   else if(b.id=="as"&&admin){var v=document.getElementById("ns").value.trim();if(!v)return;
   if(CFG.structs.some(function(x){return x.name.toLowerCase()==v.toLowerCase()}))alert(T[lang].exists);
   else{var id="s"+Date.now().toString(36);CFG.structs.push({id:id,name:v});cur=id;saveCfg().then(render)}}});
@@ -482,7 +498,7 @@ document.addEventListener("keydown",function(e){if(e.key=="Enter"&&e.target&&(e.
 document.addEventListener("change",function(e){var b=e.target;
  if(b.dataset&&b.dataset.oi!==undefined){ODR[AG[+b.dataset.oi]]=b.value}
  else if(b.dataset&&b.dataset.oq){OQ[b.dataset.oq]=b.value}
- else if(b.id=="ms"){vm=b.value;render()}
+ else if(b.id=="ms"){if(b.value=="__before"){if(admin&&!busy)openBefore(prv(CFG.months[0]));else render()}else{vm=b.value;render()}}
  else if(b.id=="sel"&&admin){cur=b.value;sv();render()}
  else if(b.id=="fA"){fA=b.value;render()}
  else if(b.id=="fS"){fS=b.value;render()}
