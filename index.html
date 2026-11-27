@@ -55,7 +55,7 @@ h2.sh{background:#1f3b63;color:#fff;border-radius:8px;padding:6px 10px;font-size
 .pie{display:block;width:180px;max-width:70%;margin:0 auto}.pie path,.pie circle{stroke:var(--card);stroke-width:1;stroke-linejoin:round}.pie path:hover{opacity:.85}
 .lg{margin-top:10px}.lgi{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:13px}.lgi i{width:12px;height:12px;border-radius:3px;flex:none}.lgi span{flex:1}.lgi small{color:var(--mut);min-width:48px;text-align:end}
 .inv th{background:#1f4e78;color:#fff;font-weight:700}.inv td:first-child,.inv th:first-child{text-align:center;width:42px}.inv td:nth-child(2),.inv th:nth-child(2){text-align:start}.inv .itot td{background:#70ad47;color:#fff;font-weight:700}.inv .ng{color:var(--rt);font-weight:700}.inv.dep td:first-child,.inv.dep th:first-child{width:auto;text-align:start}
-.xl{max-height:75vh;overflow:auto}.xl th{background:#1f4e78;color:#fff;font-weight:700;position:sticky;top:0;z-index:1}.xl td.ag{text-align:start}.xl td.sn{font-weight:700;vertical-align:middle;text-align:center;background:var(--card);border-inline-end:2px solid var(--bd);padding:8px 4px;width:40px}.vt{display:inline-block;writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap}.xl tr.g1>td{border-top:2px solid #1f4e78}.xl th,.xl td{padding:4px 6px}.xl td input{width:58px;padding:3px}.xl th{white-space:normal;font-size:12.5px;line-height:1.25}
+.xl{max-height:75vh;overflow:auto}.xl th{background:#1f4e78;color:#fff;font-weight:700;position:sticky;top:0;z-index:1}.xl td.ag{text-align:start}.xl td input.pnd{border:2px solid #f59e0b;background:#fff4d6;color:#222}.pbar{background:#fff4d6;color:#6b4a00;border:1px solid #f59e0b;border-radius:10px;padding:8px 12px;margin:0 0 10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}.xl td.sn{font-weight:700;vertical-align:middle;text-align:center;background:var(--card);border-inline-end:2px solid var(--bd);padding:8px 4px;width:40px}.vt{display:inline-block;writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap}.xl tr.g1>td{border-top:2px solid #1f4e78}.xl th,.xl td{padding:4px 6px}.xl td input{width:58px;padding:3px}.xl th{white-space:normal;font-size:12.5px;line-height:1.25}
 td.xs{font-weight:700;font-size:12px}td.xs.R{background:#f4cccc;color:#9c0006}td.xs.F{background:#ffe8b3;color:#7a4f00}td.xs.S{background:#c6efce;color:#006100}td.xs.E{background:#b42318;color:#fff}
 /* ===== impression ===== */
 #pr{display:none}
@@ -169,7 +169,7 @@ Object.assign(T.fr,{setupT:"Première utilisation : créez le compte du supervis
 Object.assign(T.ar,{setupT:"أول استخدام: أنشئ حساب المشرف",noRole:"هذا الحساب غير مرتبط بأي صلاحية. تواصل مع المشرف.",
  before:function(n){return "إضافة الأشهر من "+n+" إلى أول شهر موجود؟ لترحيل المخزون أدخل بيانات هذه الأشهر ثم راجع مخزون بداية أول شهر موجود."},
  addSup:"إضافة مشرف",sups:"المشرفون",revoke:"سحب الصلاحية",owner:"المالك",supNote2:"كل المشرفين لهم صلاحية كاملة؛ أما الأعضاء فمحصورون في منشآتهم.",revC:"سحب صلاحيات هذا المشرف؟"});
-Object.assign(T.fr,{r:"Entrées (reçues)",ds:"Livré aux centres (déduit)",
+Object.assign(T.fr,{setT0:"Modification du stock",setT:"Modification du stock (à valider)",fld:"Champ",curV:"Actuel",reqV:"Demandé",oOk2:"✔ Valider",pWait:"Modification envoyée : en attente de validation par le superviseur",pSend:"Envoyer au superviseur pour validation",pReady:function(n){return n+" antigène(s) modifié(s) — non appliqué tant que le superviseur n’a pas validé."},setSent:"Modification envoyée au superviseur.",setC:function(n){return "Valider la modification du stock de « "+n+" » ?\nLe stock début donné par le dépôt et les entrées seront déduits du dépôt."},setOver:function(x){return "Stock du dépôt insuffisant : "+x+"."},mClosed:"Ce mois a été clôturé : la demande ne peut plus être appliquée. Refusez-la et demandez une nouvelle saisie.",r:"Entrées (reçues)",ds:"Livré aux centres (déduit)",
  nextB:function(a,b){return "Clôturer"},undoB:function(a){return "Annuler"},addB:function(n){return "Ajouter "+n+" (avant le premier mois)"},
  cf:function(a,b){return "Clôturer "+a+" et ouvrir "+b+" ?\nLe stock fin de "+a+" deviendra le stock début de "+b+". Les membres ne pourront plus modifier "+a+".\nEn cas d’erreur : bouton « Annuler »."},
  undoC:function(a,b){return "Annuler la clôture de "+b+" ?\n"+a+" sera supprimé et "+b+" redeviendra le mois en cours.\nToutes les données saisies en "+a+" seront effacées et les commandes livrées en "+a+" repasseront « en attente »."},
@@ -177,14 +177,14 @@ Object.assign(T.fr,{r:"Entrées (reçues)",ds:"Livré aux centres (déduit)",
  hMv:"Indicateurs des mouvements",hSt:"Indicateurs de stock",kE:"Entrées",kU:"Doses utilisées",kAd:"Doses administrées",kP:"Pertes",kTP:"Taux de perte",kSu:"Stocks suffisants",kO:"Commandes en attente",
  totC:"TOTAL CIRCONSCRIPTION",seed:"Importer les 29 établissements de la circonscription",seedOk:function(n){return n+" établissement(s) ajouté(s)."},
  mnote:"Stock fin = stock début + entrées − doses utilisées. Pertes = doses utilisées − doses administrées (calcul automatique). Le stock début d’un établissement est ce que le dépôt lui donne (saisi par le superviseur) ou le report du mois précédent ; les entrées sont les livraisons suivantes (commandes validées). Ce que le dépôt donne est déduit automatiquement de son stock ; le report du mois précédent ne l’est pas.",
- mnote2:"Vous ne pouvez modifier que les doses utilisées et administrées de votre établissement, pour le mois en cours. Le stock début et les entrées sont saisis par le superviseur.",
+ mnote2:"Vous ne modifiez que votre établissement, pour le mois en cours. Doses utilisées et administrées : enregistrées immédiatement. Stock début et entrées : envoyés au superviseur, appliqués (et déduits du dépôt) après sa validation.",
  oNew:"Nouvelle commande (besoins de l’établissement)",oCur:"Stock actuel",oReq:"Quantité demandée",oNote:"Observation (facultatif)",oSend:"Envoyer la commande au superviseur",oMine:"Mes commandes",oPend:"Commandes en attente",oDone:"Commandes traitées",oNone:"Aucune commande",
  oS:{pending:"En attente",approved:"Validée",rejected:"Refusée"},oDep:"Stock dépôt",oGive:"Quantité à livrer",oDlv:"Livré",oOk:"✔ Valider et livrer",oRej:"Refuser",oCan:"Annuler la commande",
  oSent:"Commande envoyée au superviseur.",dNeg:function(a,n){return "Refusé : le stock du dépôt pour "+a+" ne peut pas devenir négatif (déjà donné aux centres : "+n+")."},oEmpty:"Saisissez au moins une quantité.",oOver:function(a,n){return "Stock du dépôt insuffisant pour "+a+" (disponible : "+n+")."},
  oApC:function(n,m){return "Valider la livraison pour « "+n+" » ?\nLes quantités seront ajoutées aux entrées de l’établissement ("+m+") et déduites du stock du dépôt."},oRejC:"Refuser cette commande ?",oCanC:"Annuler cette commande ?",
  oHint:"Les quantités sont pré-remplies pour les antigènes en rupture ou en stock faible (jusqu’au seuil). Modifiez-les si besoin.",oBy:"Demandé par",oDate:"Date",oGone:"Établissement supprimé",
  guide:["Objectif : suivre en temps réel le stock de chaque antigène dans les établissements de la circonscription sanitaire de Kankossa.","Mouvements : saisir pour chaque antigène le stock début, les doses utilisées et les doses administrées. Les pertes (utilisées − administrées) et le stock fin (début + entrées − utilisées) sont calculés automatiquement. Le tableau de bord et l’inventaire sont directement liés aux mouvements et se mettent à jour automatiquement.","Dépôt Moughataa : c’est le distributeur principal des établissements ; il ne consomme pas (ni doses administrées ni pertes). Tout ce que reçoit un établissement est automatiquement déduit du stock du dépôt.","Commandes : le membre envoie la liste de ses besoins (pré-remplie avec les ruptures et stocks faibles). Le superviseur la reçoit, saisit les quantités à livrer et valide : elles entrent dans le stock de l’établissement (mois en cours) et sont déduites du dépôt.","Inventaire : stock fin de chaque antigène pour chaque établissement, avec le total de la circonscription par antigène.","Statut : RUPTURE = 0 dose ; STOCK FAIBLE = 1 jusqu’au seuil − 1 ; STOCK SUFFISANT = seuil ou plus (20 par défaut, paramétrable). Un stock négatif ou des doses administrées supérieures aux doses utilisées sont signalés en ERREUR.","Le mois en cours est le dernier mois ouvert. Le superviseur choisit le mois dans la liste déroulante et ouvre le mois suivant avec le bouton « Clôturer » ; le stock fin est reporté en stock début. En cas d’erreur, le bouton « Annuler » rouvre le mois précédent. Seul le superviseur modifie le dépôt, les entrées, le seuil et les mois passés.","Contrôle : comparer régulièrement le stock théorique au stock physique et vérifier les lots, dates de péremption et observations.","Impression : « Imprimer le rapport » produit un rapport A4 (enregistrable en PDF) par établissement ; le superviseur imprime aussi le rapport collectif."]});
-Object.assign(T.ar,{r:"الوارد إلى المستودع",ds:"المُسلَّم للمراكز (يُخصم)",
+Object.assign(T.ar,{setT0:"تعديل المخزون",setT:"تعديل المخزون (بانتظار الموافقة)",fld:"الخانة",curV:"الحالي",reqV:"المطلوب",oOk2:"✔ موافق",pWait:"تم إرسال التعديل: بانتظار موافقة المشرف",pSend:"إرسال إلى المشرف للموافقة",pReady:function(n){return "عُدّل "+n+" لقاح — لن يُطبَّق حتى يوافق المشرف."},setSent:"تم إرسال التعديل إلى المشرف.",setC:function(n){return "الموافقة على تعديل مخزون «"+n+"»؟\nسيُخصم ما أعطاه المستودع في مخزون البداية والوارد من المستودع."},setOver:function(x){return "مخزون المستودع غير كافٍ: "+x+"."},mClosed:"أُغلق هذا الشهر: لا يمكن تطبيق الطلب. ارفضه واطلب إدخالاً جديداً.",r:"الوارد إلى المستودع",ds:"المُسلَّم للمراكز (يُخصم)",
  nextB:function(a,b){return "إغلاق"},undoB:function(a){return "تراجع"},addB:function(n){return "إضافة "+n+" (قبل أول شهر)"},
  cf:function(a,b){return "إغلاق "+a+" وفتح "+b+"؟\nسيصبح مخزون نهاية "+a+" هو مخزون بداية "+b+"، ولن يتمكن الأعضاء من تعديل "+a+".\nعند الخطأ: زر «تراجع»."},
  undoC:function(a,b){return "التراجع عن إغلاق "+b+"؟\nسيُحذف "+a+" ويعود "+b+" هو الشهر الجاري.\nستُمسح كل البيانات المدخلة في "+a+"، وتعود الطلبيات المسلّمة في "+a+" إلى «في الانتظار»."},
@@ -192,7 +192,7 @@ Object.assign(T.ar,{r:"الوارد إلى المستودع",ds:"المُسلَ�
  hMv:"مؤشرات الحركات",hSt:"مؤشرات المخزون",kE:"الوارد",kU:"الجرعات المستعملة",kAd:"الجرعات المعطاة",kP:"الضائع",kTP:"نسبة الضياع",kSu:"مخزون كافٍ",kO:"طلبيات في الانتظار",
  totC:"مجموع الدائرة الصحية",seed:"استيراد المنشآت الـ29 التابعة للدائرة",seedOk:function(n){return "تمت إضافة "+n+" منشأة."},
  mnote:"المخزون النهائي = مخزون البداية + الوارد − الجرعات المستعملة. الضائع = المستعملة − المعطاة (يُحسب تلقائياً). مخزون بداية المنشأة هو ما يعطيه لها المستودع (يدخله المشرف) أو المُرحَّل من الشهر السابق، والوارد هو ما يصلها لاحقاً (الطلبيات). ما يعطيه المستودع يُخصم تلقائياً من مخزونه، أما المُرحَّل فلا يُخصم.",
- mnote2:"لا يمكنك تعديل إلا الجرعات المستعملة والمعطاة لمنشأتك، وللشهر الجاري فقط. مخزون البداية والوارد يدخلهما المشرف.",
+ mnote2:"تعدّل منشأتك فقط وللشهر الجاري. الجرعات المستعملة والمعطاة: تُحفظ فوراً. مخزون البداية والوارد: يُرسلان إلى المشرف، ويُطبَّقان (ويُخصمان من المستودع) بعد موافقته.",
  oNew:"طلبية جديدة (نواقص المنشأة)",oCur:"المخزون الحالي",oReq:"الكمية المطلوبة",oNote:"ملاحظة (اختياري)",oSend:"إرسال الطلبية إلى المشرف",oMine:"طلبياتي",oPend:"طلبيات في الانتظار",oDone:"طلبيات معالجة",oNone:"لا توجد طلبيات",
  oS:{pending:"في الانتظار",approved:"تمت الموافقة",rejected:"مرفوضة"},oDep:"مخزون المستودع",oGive:"الكمية المسلّمة",oDlv:"المسلَّم",oOk:"✔ موافق وتسليم",oRej:"رفض",oCan:"إلغاء الطلبية",
  oSent:"تم إرسال الطلبية إلى المشرف.",dNeg:function(a,n){return "مرفوض: لا يمكن أن يصبح مخزون المستودع من "+a+" سالباً (المعطى للمراكز: "+n+")."},oEmpty:"أدخل كمية واحدة على الأقل.",oOver:function(a,n){return "مخزون المستودع غير كافٍ لـ "+a+" (المتوفر: "+n+")."},
@@ -200,7 +200,7 @@ Object.assign(T.ar,{r:"الوارد إلى المستودع",ds:"المُسلَ�
  oHint:"الكميات معبأة مسبقاً للقاحات النافدة أو ذات المخزون الضعيف (حتى الحد). عدّلها عند الحاجة.",oBy:"الطالب",oDate:"التاريخ",oGone:"منشأة محذوفة",
  guide:["الهدف: متابعة مخزون كل لقاح في منشآت الدائرة الصحية بكنكوصة في الوقت الفعلي.","الحركات: أدخل لكل لقاح مخزون البداية والجرعات المستعملة والجرعات المعطاة. ويُحسب الضائع (المستعملة − المعطاة) والمخزون النهائي (البداية + الوارد − المستعملة) تلقائياً. لوحة القيادة والجرد مرتبطان مباشرة بالحركات ويتحدّثان تلقائياً.","مستودع المقاطعة: هو الموزع الرئيسي للمنشآت ولا يستهلك (لا جرعات معطاة ولا ضائع). كل ما تستلمه منشأة يُخصم تلقائياً من مخزون المستودع.","الطلبيات: يرسل العضو لائحة نواقصه (معبأة مسبقاً بالنفاد والمخزون الضعيف). يستلمها المشرف فيعبئ الكميات المسلّمة ويضغط موافق، فتدخل في مخزون المنشأة (الشهر الجاري) وتُخصم من المستودع.","الجرد: المخزون النهائي لكل لقاح في كل منشأة، مع مجموع الدائرة لكل لقاح.","الحالة: نفاد = 0 جرعة؛ مخزون ضعيف = من 1 إلى الحد − 1؛ مخزون كافٍ = الحد أو أكثر (20 افتراضياً وقابل للتعديل). المخزون السالب أو جرعات معطاة أكثر من المستعملة تظهر «خطأ».","الشهر الجاري هو آخر شهر مفتوح. يختار المشرف الشهر من القائمة المنسدلة ويفتح الشهر الموالي بزر «إغلاق» فيُرحَّل مخزون النهاية إلى البداية. وعند الخطأ يعيد زر «تراجع» فتح الشهر السابق. المشرف وحده يعدّل المستودع والوارد والحد والأشهر السابقة.","الضبط: قارن بانتظام المخزون النظري بالمخزون الفعلي وراجع الدفعات وتواريخ انتهاء الصلاحية والملاحظات.","الطباعة: زر «طباعة التقرير» يُنتج تقريراً بحجم A4 (يمكن حفظه PDF) لكل منشأة؛ ويطبع المشرف أيضاً التقرير الجماعي."]});
 var FB=null,me="",cl=false,authed=false,ME=null,authErr="",dberr=false,USR={},unsubs=[],memSub={},curUid="",hasOwner=null,oc=false,setting=false,ADM={};
-var ORD={},ODR={},OQ={};
+var ORD={},ODR={},OQ={},PEN={};
 var lang="fr",tab=0,cur=DP,vm=null,yr=null,CFG=null,DEP={},DAT={},db=null,admin=false,ready=false,pend=false,busy=false,tmo,KEY="kv-lang";
 try{lang=localStorage.getItem(KEY)||"fr"}catch(e){}
 /* garder l’onglet ouvert (et l’établissement choisi) après actualisation de la page */
@@ -255,6 +255,10 @@ function dash(){var t=T[lang],m=M(),V=VS(),C={R:0,F:0,S:0,E:0},tot=0,ra="",rd=""
  +'<h2 class="sh">'+t.byS2+'</h2><div class="dg"><div class="sc"><table>'+hrow([t.st,t.tot,t.ruptures,t.faibles,t.stat])+rs+'</table></div>'+ch2+'</div>'
  +'<div class="sc" style="margin-top:14px;max-width:420px"><table>'+row([bd("R"),"<b>"+(C.R+C.E)+"</b>"])+row([bd("F"),"<b>"+C.F+"</b>"])+row([bd("S"),"<b>"+C.S+"</b>"])+'</table></div>'
  +(admin?'<h2 class="sh">'+t.byD+'</h2><div class="sc"><table>'+hrow([t.ag,t.d,t.r,t.f,t.stat])+rd+'</table></div>':'')}
+/* champ du membre pour stock début / entrées : en attente tant que le superviseur n'a pas validé */
+function pinp(i,k,v,ok,sid,a){var pk=npSet(sid),pv=pk&&ORD[pk].set[a]&&ORD[pk].set[a][k],sv=PEN[a]&&PEN[a][k];
+ if(pv!=null)return '<td><input type="number" class="pnd" value="'+pv+'" disabled title="'+T[lang].pWait+'"></td>';
+ return '<td><input type="number" min="0" step="1" inputmode="numeric" data-i="'+i+'" data-k="'+k+'" data-s="'+sid+'"'+(sv!=null?' class="pnd"':'')+' value="'+(sv!=null?sv:v)+'"'+(ok&&!pk?"":" disabled")+'></td>'}
 function inp(i,k,v,ok,sid){return '<td><input type="number" min="0" step="1" inputmode="numeric" data-i="'+i+'" data-k="'+k+'"'+(sid?' data-s="'+sid+'"':'')+' value="'+v+'"'+(ok?"":" disabled")+'></td>'}
 /* Mouvements : une seule table comme la feuille « Mouvements » du fichier Excel (Structure × Antigène), avec filtres */
 var ALL="__all",fA="",fS="";
@@ -272,12 +276,13 @@ function mouv(){var t=T[lang],m=M(),isD=admin&&cur==DP,open=m==CFG.cur||(admin&&
   /* nom de l'établissement affiché une seule fois (cellule fusionnée) ; colonne masquée si un seul établissement */
   head[0]='<span class="vt">'+t.st+'</span>';
   SS.forEach(function(s){var rs=[];AG.forEach(function(a,i){if(fA&&fA!=a)return;var r=sd(m,s.id,a),n=sf(m,s.id,a),q=r.p<0?"E":st(n);if(fS&&fS!=q)return;cnt++;var id=s.id+'_'+i;
-   rs.push('<td class="ag">'+L(a)+"</td>"+inp(i,"d",r.d,open&&admin,s.id)+inp(i,"e",r.e,open&&admin,s.id)+inp(i,"u",r.u,open,s.id)+inp(i,"a",r.a,open,s.id)+'<td id="p'+id+'">'+pc(r.p)+'</td><td id="f'+id+'"><b>'+n+'</b></td><td id="s'+id+'" class="xs '+q+'">'+t[q]+"</td>")});
+   rs.push('<td class="ag">'+L(a)+"</td>"+(admin?inp(i,"d",r.d,open,s.id)+inp(i,"e",r.e,open,s.id):pinp(i,"d",r.d,open,s.id,a)+pinp(i,"e",r.e,open,s.id,a))+inp(i,"u",r.u,open,s.id)+inp(i,"a",r.a,open,s.id)+'<td id="p'+id+'">'+pc(r.p)+'</td><td id="f'+id+'"><b>'+n+'</b></td><td id="s'+id+'" class="xs '+q+'">'+t[q]+"</td>")});
    rs.forEach(function(x,k){rows+=(k==0?'<tr class="g1"><td class="sn" rowspan="'+rs.length+'"><span'+(rs.length>=4?' class="vt"':'')+'>'+esc(s.name)+'</span></td>':'<tr>')+x+"</tr>"})})}
+ var ph=admin?'':'<div id="pbx">'+pbH()+'</div>';
  var pb=isD?'':(admin&&cur==ALL?'<button class="sm pb" id="pa">🖨 '+t.prAll+'</button>':'<button class="sm pb" id="pf">🖨 '+t.prB+'</button>');
  return '<div class="bar">'+(admin?'<select id="sel">'+o+'</select>':'<b>'+esc((CFG.structs.find(function(x){return x.id==ME.sid})||{}).name||"")+'</b>')+fa+fs+pb+'<span class="note" style="margin:0">'+cnt+' '+t.lines+'</span></div>'
  +(admin?'<div class="bar"><label>'+t.thr+' <input id="thr" type="number" min="1" step="1" value="'+CFG.thr+'" style="width:70px"></label></div>':'')
- +'<div class="sc xl"><table>'+hrow(head)+rows+'</table></div><p class="note">'+t.mnote+(admin&&m!=CFG.cur?'<br>'+t.corr:'')+(admin?'':'<br>'+t.mnote2)+'</p>'
+ +ph+'<div class="sc xl"><table>'+hrow(head)+rows+'</table></div><p class="note">'+t.mnote+(admin&&m!=CFG.cur?'<br>'+t.corr:'')+(admin?'':'<br>'+t.mnote2)+'</p>'
  +(admin?'<h2>'+t.addS+'</h2><div class="bar"><input id="ns" placeholder="'+t.addPh+'" style="padding:8px;border:1px solid var(--bd);border-radius:8px;background:var(--card);color:var(--tx)"><button class="sm" id="as">+</button></div>':'')}
 /* Inventaire : même présentation que la feuille « Inventaire » du fichier Excel */
 function inv(){var t=T[lang],m=M(),V=VS(),TT={},b="";
@@ -293,7 +298,7 @@ function sname(sid){var s=CFG.structs.find(function(z){return z.id==sid});return
 function oList(ks){var t=T[lang];if(!ks.length)return '<p class="note">'+t.oNone+'</p>';
  return ks.map(function(k){var o=ORD[k],q=o.status=="approved"?o.dlv||{}:o.items||{},c=o.status=="approved"?"S":o.status=="rejected"?"R":"F";
   return '<div class="sc" style="padding:10px 12px;margin-bottom:8px"><div class="bar" style="margin:0"><b style="flex:1">'+esc(sname(o.sid))+'</b><span class="s '+c+'">'+t.oS[o.status]+'</span>'+(!admin&&o.status=="pending"?'<button class="sm" data-oc="'+k+'">'+t.oCan+'</button>':'')+'</div>'
-  +'<div class="note" style="margin:4px 0 0">'+t.oDate+' : '+fdt(o.created)+(o.by?' · '+t.oBy+' : '+esc(o.by):'')+(o.dm?' · '+t.mois+' : '+ml(o.dm):'')+'<br>'+(o.status=="approved"?t.oDlv:t.oReq)+' : '+(Object.keys(q).map(function(a){return L(a)+" "+q[a]}).join(" · ")||"—")+(o.note?'<br>« '+esc(o.note)+' »':'')+'</div></div>'}).join("")}
+  +'<div class="note" style="margin:4px 0 0">'+t.oDate+' : '+fdt(o.created)+(o.by?' · '+t.oBy+' : '+esc(o.by):'')+(o.dm?' · '+t.mois+' : '+ml(o.dm):'')+'<br>'+(o.kind=="set"?'<b>'+(o.status=="pending"?t.setT:t.setT0)+'</b> : '+setTxt(o):(o.status=="approved"?t.oDlv:t.oReq)+' : '+(Object.keys(q).map(function(a){return L(a)+" "+q[a]}).join(" · ")||"—"))+(o.note?'<br>« '+esc(o.note)+' »':'')+'</div></div>'}).join("")}
 function orders(){var t=T[lang],m=CFG.cur,ks=Object.keys(ORD).sort(function(a,b){return (ORD[b].created||0)-(ORD[a].created||0)}),
  P=ks.filter(function(k){return ORD[k].status=="pending"}),D=ks.filter(function(k){return ORD[k].status!="pending"}).slice(0,40);
  if(!admin){var rows="";AG.forEach(function(a,i){var n=sf(m,ME.sid,a),q=st(n),sg=q=="R"||q=="F"?Math.max(0,CFG.thr-n):0,v=ODR[a]!=null?ODR[a]:(sg||"");
@@ -302,7 +307,7 @@ function orders(){var t=T[lang],m=CFG.cur,ks=Object.keys(ORD).sort(function(a,b)
    +'<div class="bar"><input class="fi" id="on" placeholder="'+t.oNote+'" style="flex:1;min-width:180px"><button class="sm pb" id="os">'+t.oSend+'</button></div>'
    +'<h2>'+t.oMine+'</h2>'+oList(ks)}
  var h='<h2>'+t.oPend+' ('+P.length+')</h2>';if(!P.length)h+='<p class="note">'+t.oNone+'</p>';
- P.forEach(function(k){var o=ORD[k],rows="";
+ P.forEach(function(k){var o=ORD[k],rows="";if(o.kind=="set"){h+=setCard(k);return}
   AG.forEach(function(a,i){var rq=+(o.items&&o.items[a])||0,n=sf(m,o.sid,a),dp=df(m,a),key=k+"_"+a,v=OQ[key]!=null?OQ[key]:(rq?Math.min(rq,Math.max(0,dp)):"");
    rows+='<tr'+(rq?' style="background:var(--w)"':'')+'><td>'+L(a)+'</td><td>'+n+' '+bd(st(n))+'</td><td>'+dp+'</td><td><b>'+(rq||"—")+'</b></td><td><input type="number" min="0" step="1" inputmode="numeric" data-oq="'+key+'" value="'+v+'"></td></tr>'});
   h+='<div class="sc" style="padding:10px 12px;margin-bottom:12px"><div class="bar" style="margin:0 0 6px"><b style="flex:1">'+esc(sname(o.sid))+'</b><span class="note" style="margin:0">'+fdt(o.created)+(o.by?' · '+esc(o.by):'')+'</span></div>'
@@ -310,6 +315,29 @@ function orders(){var t=T[lang],m=CFG.cur,ks=Object.keys(ORD).sort(function(a,b)
    +'<div style="overflow-x:auto"><table>'+hrow([t.ag,t.oCur,t.oDep,t.oReq,t.oGive])+rows+'</table></div>'
    +'<div class="bar" style="margin:8px 0 0"><button class="sm pb" data-oa="'+k+'">'+t.oOk+'</button><button class="sm E" data-or="'+k+'">'+t.oRej+'</button><span class="note" style="margin:0">'+t.mois+' : '+ml(m)+'</span></div></div>'});
  return h+'<h2>'+t.oDone+'</h2>'+oList(D)}
+/* ===== Modification du stock début / des entrées par le membre : appliquée seulement après validation du superviseur ===== */
+function setTxt(o){var t=T[lang];return Object.keys(o.set||{}).map(function(a){var x=o.set[a];return L(a)+" : "+["d","e"].filter(function(f){return x[f]!=null}).map(function(f){return (f=="d"?t.d:t.kE)+" "+x[f]}).join(", ")}).join(" · ")}
+function pbH(){var pk=npSet(ME.sid),np=Object.keys(PEN).length;return pk?'<div class="pbar">⏳ '+T[lang].pWait+'</div>':np?'<div class="pbar"><span id="pbt">'+T[lang].pReady(np)+'</span> <button class="sm pb" id="psend">📨 '+T[lang].pSend+'</button><button class="sm" id="pclr">'+T[lang].cancel+'</button></div>':''}
+function npSet(sid){return Object.keys(ORD).filter(function(k){var o=ORD[k];return o.kind=="set"&&o.status=="pending"&&o.sid==sid})[0]}
+function setCard(k){var t=T[lang],o=ORD[k],m=CFG.cur,rows="";
+ Object.keys(o.set||{}).forEach(function(a){var x=o.set[a],r=sd(m,o.sid,a);["d","e"].forEach(function(f){if(x[f]==null)return;
+  rows+=row([L(a),f=="d"?t.d:t.kE,r[f],'<b>'+x[f]+'</b>',df(m,a)])})});
+ return '<div class="sc" style="padding:10px 12px;margin-bottom:12px;border-color:#f59e0b"><div class="bar" style="margin:0 0 6px"><b style="flex:1">'+esc(sname(o.sid))+' — '+t.setT+'</b><span class="note" style="margin:0">'+fdt(o.created)+(o.by?' · '+esc(o.by):'')+'</span></div>'
+  +'<div style="overflow-x:auto"><table>'+hrow([t.ag,t.fld,t.curV,t.reqV,t.oDep])+rows+'</table></div>'
+  +'<div class="bar" style="margin:8px 0 0"><button class="sm pb" data-sa="'+k+'">'+t.oOk2+'</button><button class="sm E" data-or="'+k+'">'+t.oRej+'</button><span class="note" style="margin:0">'+t.mois+' : '+ml(o.m)+'</span></div></div>'}
+function approveSet(k,b){var t=T[lang],o=ORD[k],m=CFG.cur;if(!o)return;
+ if(o.m!=m){alert(t.mClosed);return}if(!CFG.structs.some(function(s){return s.id==o.sid})){alert(t.oGone);return}
+ DAT[m]=DAT[m]||{};var old=DAT[m][o.sid],cd=JSON.parse(JSON.stringify(old||{})),b0={};AG.forEach(function(a){b0[a]=df(m,a)});
+ for(var a in o.set){var x=o.set[a],r=nrm(cd[a]);if(x.d!=null){var cy=+r.d||0;if(x.d>=cy)r.dl=x.d-cy;else{r.d=x.d;r.dl=0}}if(x.e!=null)r.e=x.e;cd[a]=r}
+ DAT[m][o.sid]=cd;var bad=AG.filter(function(a){return df(m,a)<0&&df(m,a)<b0[a]}).map(function(a){return L(a)+" ("+t.oDep+" : "+Math.max(0,b0[a])+")"});
+ if(old)DAT[m][o.sid]=old;else Reflect.deleteProperty(DAT[m],o.sid);
+ if(bad.length){alert(t.setOver(bad.join(", ")));return}
+ if(!confirm(t.setC(sname(o.sid))))return;b.disabled=true;
+ db.batch([{p:"data/"+m+"_"+o.sid,v:cd},{p:"orders/"+k,v:Object.assign({},o,{status:"approved",dm:m,dAt:Date.now(),dBy:me})}]).catch(function(){b.disabled=false;alert(t.noW)})}
+function sendSet(b){var t=T[lang],n=Object.keys(PEN).length;if(!n)return;b.disabled=true;
+ var id="o"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+ db.doc("orders/"+id).set({kind:"set",sid:ME.sid,uid:curUid,by:ME.name||"",set:JSON.parse(JSON.stringify(PEN)),status:"pending",m:CFG.cur,created:Date.now()})
+  .then(function(){PEN={};alert(t.setSent);render()}).catch(function(){b.disabled=false;alert(t.noW)})}
 function sendOrder(b){var t=T[lang],it={},n=0,bad=false;
  AG.forEach(function(a,i){var el=document.querySelector('[data-oi="'+i+'"]'),s=el?el.value.trim():"";if(s==="")return;var v=Number(s);if(!Number.isInteger(v)||v<0){bad=true;return}if(v>0){it[a]=v;n++}});
  if(bad){alert(t.bad);return}if(!n){alert(t.oEmpty);return}b.disabled=true;
@@ -479,7 +507,7 @@ function adminClick(b){var i=b.id,d=b.dataset||{};
  if(!authed)return false;
  if(i=="cp"){openCP();return true}if(i=="cpok"){doCP();return true}
  if(i=="pf"){doPrint(rpFac(admin?cur:ME.sid,M()));return true}
- if(i=="os"&&!admin){sendOrder(b);return true}if(d.oc&&!admin){cancelOrder(d.oc);return true}
+ if(i=="os"&&!admin){sendOrder(b);return true}if(i=="psend"&&!admin){sendSet(b);return true}if(i=="pclr"&&!admin){PEN={};render();return true}if(d.oc&&!admin){cancelOrder(d.oc);return true}
  if(!admin)return false;
  if(i=="pa"){doPrint(rpAll(M()));return true}
  if(i=="as2"){openAS();return true}if(i=="mas"){addSup(b);return true}if(d.rv){revokeSup(d.rv);return true}
@@ -489,7 +517,7 @@ function adminClick(b){var i=b.id,d=b.dataset||{};
  if(i=="ini"){var m=gv("im");if(m){var now=new Date().toISOString().slice(0,7),ms=[m];for(var x=nxt(m);x<=now;x=nxt(x))ms.push(x);var k0=Date.now().toString(36);CFG={cur:ms[ms.length-1],months:ms,structs:SEED.map(function(n,j){return {id:"s"+k0+j,name:n}}),thr:20};saveCfg().then(render)}return true}
  if(i=="rp"){FB.reset(me).then(function(){alert(T[lang].sent)});return true}
  if(i=="rs"){resetAll();return true}
- if(i=="sd"){seedS();return true}if(i=="mnext"){if(!busy)openThrough(nxt(CFG.cur));return true}if(i=="mundo"){undoClose();return true}if(d.oa){approveOrder(d.oa,b);return true}if(d.or){rejectOrder(d.or);return true}if(d.rn){renS(d.rn);return true}if(d.dl){delS(d.dl);return true}
+ if(i=="sd"){seedS();return true}if(i=="mnext"){if(!busy)openThrough(nxt(CFG.cur));return true}if(i=="mundo"){undoClose();return true}if(d.oa){approveOrder(d.oa,b);return true}if(d.sa){approveSet(d.sa,b);return true}if(d.or){rejectOrder(d.or);return true}if(d.rn){renS(d.rn);return true}if(d.dl){delS(d.dl);return true}
  return false}
 document.addEventListener("click",function(e){var b=e.target;
  if(adminClick(b)){}else if(b.id=="lg"){lang=lang=="fr"?"ar":"fr";try{localStorage.setItem(KEY,lang)}catch(x){}render()}
@@ -512,7 +540,7 @@ document.addEventListener("change",function(e){var b=e.target;
   var sid=admin?(b.dataset.s||cur):ME.sid;
   var isD=admin&&sid==DP,path,o;
   if(isD){DEP[m]=DEP[m]||{};o=DEP[m];path="depot/"+m}else{DAT[m]=DAT[m]||{};DAT[m][sid]=DAT[m][sid]||{};o=DAT[m][sid];path="data/"+m+"_"+sid}
-  if(!isD&&(k=="e"||k=="d")&&!admin)return;var b0=df(m,a),pv=o[a]?JSON.parse(JSON.stringify(o[a])):null,e0=isD?0:sd(m,sid,a)[k];
+  if(!isD&&(k=="e"||k=="d")&&!admin){if(m!=CFG.cur||npSet(ME.sid))return;(PEN[a]=PEN[a]||{})[k]=v;b.classList.add("pnd");var y=document.getElementById("pbt"),x=document.getElementById("pbx");if(y)y.textContent=T[lang].pReady(Object.keys(PEN).length);else if(x)x.innerHTML=pbH();return}var b0=df(m,a),pv=o[a]?JSON.parse(JSON.stringify(o[a])):null,e0=isD?0:sd(m,sid,a)[k];
   var r=o[a]=isD?Object.assign({d:0,r:0,p:0},o[a]):nrm(o[a]);
   if(!isD&&k=="d"){var cy=+r.d||0;if(v>=cy)r.dl=v-cy;else{r.d=v;r.dl=0}}else r[k]=v;
   if((isD||k=="e"||k=="d")&&df(m,a)<0&&df(m,a)<b0){if(pv)o[a]=pv;else Reflect.deleteProperty(o,a);b.value=isD?(pv&&+pv[k]||0):e0;b.blur();alert(isD?T[lang].dNeg(L(a),dist(m,a)):T[lang].oOver(L(a),Math.max(0,b0)+e0));render();return}
@@ -541,7 +569,7 @@ function afterAuth(u){var uid=u.uid;
  }).catch(function(){if(curUid!=uid)return;authErr="rulesErr";render()})}
 function boot(fb){FB=fb;db=fb.db;ready=true;
  db.doc("meta/owner").get().then(function(x){hasOwner=x.exists;oc=true;render()}).catch(function(){hasOwner=null;oc=true;render()});
- fb.onAuth(function(u){stopAll();authed=!!u;ME=null;admin=false;me=u?u.email:"";authErr="";dberr=false;CFG=null;DEP={};DAT={};USR={};ADM={};ORD={};ODR={};OQ={};cl=false;tab=gT();vm=null;yr=null;cur=gC();curUid=u?u.uid:"";
+ fb.onAuth(function(u){stopAll();authed=!!u;ME=null;admin=false;me=u?u.email:"";authErr="";dberr=false;CFG=null;DEP={};DAT={};USR={};ADM={};ORD={};ODR={};OQ={};PEN={};cl=false;tab=gT();vm=null;yr=null;cur=gC();curUid=u?u.uid:"";
   render();if(!u||setting)return;afterAuth(u)})}
 setTimeout(function(){if(!ready){ready=true;cl=true;render()}},12000);
 </script>
